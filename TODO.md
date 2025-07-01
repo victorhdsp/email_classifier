@@ -1,10 +1,11 @@
 ## 1. Setup Inicial e Infraestrutura
 
-* [ ] Criar repositórios separados para frontend e backend.
-* [ ] Configurar ambiente de desenvolvimento para backend (FastAPI + ambiente virtual Python + dependências básicas).
-* [ ] Configurar ambiente de desenvolvimento para frontend (React + Vite/CRA + ESLint + Prettier).
-* [ ] Criar README inicial com instruções de setup e rodar localmente.
-
+* [x] Criar repositórios separados para frontend e backend.
+* [x] Configurar ambiente de desenvolvimento para backend (FastAPI + dependências básicas).
+* [x] Configurar ambiente de desenvolvimento para frontend (React + Vite/CRA + ESLint + Prettier).
+* [x] Configurar docker para ambos os projetos.
+* [x] Adcionar um docker-compose para rodar ambos os projetos simultaneamente.
+* [x] Criar README na raiz do projeto, com instruções de setup e rodar localmente de forma indiviual e pelo docker-compose, comentando versões necessárias.
 ---
 
 ## 2. Backend - Email Analysis
