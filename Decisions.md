@@ -79,6 +79,39 @@ Para o funcionamento dessa feature pensei inicialmente em um fluxo de 4 etapas: 
 
 - O `timestamp` é opcional, nem sempre o conteúdo do e-mail vai conter a data e envio, nesses casos o conteúdo volta sem data.
 
+### Arquitetura
+
+Não sou muito fã de criar a estrutura de pastas baseada em responsábilidades na raiz do projeto, porque conforme o projeto vai crescendo com mais features, você vai fazer edições e precisa ficar catando arquivo um em cada lugar, tem suas vantagens tipo listar rapidamente todas as responsábilidades e é mais fácil de reutilizar código, um exemplo abaixo:
+```
+/backend
+|-- /routes
+|---- rota_1.py
+|-- /controllers
+|---- controller_1.py
+|-- /services
+|---- service_1.py
+...
+```
+
+Pessoalmente eu prefiro criar a estrutura de pastas baseadas em funcionalidades e fazer a separação de responsabilidades dentro de cada funcionalidade (se necessário), mas com algumas excessões por comodidade.
+
+- Se eu tenho 1 serviço, não faz sentido criar uma pasta, então eu coloco no arquivo service, com classe nomeada normalmente tipo: `BlablablaService`.
+
+Para lidar com a reutilização de código criar uma shared a nivel de funcionalidade e colocar o código compartilhado lá de forma genérica, extendendo na funcionalidade de fato e para criar algo exclusivo.
+```
+/backend
+|-- /api # esse é um exemplo de excessão
+|---- /v1 # a versão da api influencia o endpoint.
+|------ rota_1.py
+|-- /<feature>
+|---- /controllers ou controller.py
+|---- /services ou service.py
+|---- ...
+|-- /shared
+|---- /model
+|------ generic_model.py
+```
+
 ---
 
 ## **4. Integração Frontend + Backend**
