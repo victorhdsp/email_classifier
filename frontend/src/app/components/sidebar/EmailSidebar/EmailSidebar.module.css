@@ -1,0 +1,23 @@
+.sidebarContainer {
+  @apply fixed inset-y-0 right-0 w-96 bg-white shadow-2xl transform transition-transform duration-300 z-40;
+}
+
+.sidebarContainerOpen {
+  @apply translate-x-0;
+}
+
+.sidebarContainerClosed {
+  @apply translate-x-full;
+}
+
+.sidebarContent {
+  @apply h-full flex flex-col;
+}
+
+.resultsContainer {
+  @apply flex-1 overflow-y-auto;
+}
+
+.mobileOverlay {
+  @apply fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden;
+}

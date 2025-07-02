@@ -1,0 +1,15 @@
+.appContainer {
+  @apply min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 relative;
+}
+
+.mainContentContainer {
+  @apply min-h-screen flex items-center justify-center p-4 transition-all duration-300;
+}
+
+.mainContentContainerSidebarOpen {
+  @apply pr-96;
+}
+
+.maxWidthContainer {
+  @apply w-full max-w-lg;
+}
