@@ -33,7 +33,11 @@ function EmailForm({ onEmailClassified, setIsProcessing, isProcessing }: EmailFo
 
   return (
     <form onSubmit={handleSubmit} className={styles.formContainer}>
-      <Tabs.Root className="flex flex-col" value={uploadMode} onValueChange={(value) => setUploadMode(value as 'file' | 'text')}>
+      <Tabs.Root 
+        className="flex flex-col"
+        value={uploadMode}
+        onValueChange={(value) => setUploadMode(value as 'file' | 'text')}
+      >
         <div className={styles.modeToggleContainer}>
           <Tabs.List className={styles.tabsList}>
             <Tabs.Trigger

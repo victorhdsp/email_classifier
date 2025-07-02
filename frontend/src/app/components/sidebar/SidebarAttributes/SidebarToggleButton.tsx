@@ -15,6 +15,7 @@ function SidebarToggleButton({ sidebarOpen, setSidebarOpen, hasResults }: Sideba
       className={`${styles.sidebarToggleButton} ${
         sidebarOpen ? styles.sidebarToggleButtonOpen : styles.sidebarToggleButtonClosed
       }`}
+      aria-label="toggle sidebar"
     >
       {sidebarOpen ? (
         <ChevronRight className={styles.sidebarToggleButtonIcon} />
