@@ -1,6 +1,8 @@
 from fastapi import APIRouter, FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from src.api.route import api_router
+from src.shared.middleware.error import generic_exception_handler
 
 
 class AppBuilder:
@@ -12,9 +14,17 @@ class AppBuilder:
         return self
 
     def with_exception_handlers(self) -> "AppBuilder":
-        from src.shared.middleware.error import generic_exception_handler
-
         self.app.add_exception_handler(Exception, generic_exception_handler)
+        return self
+
+    def with_cors(self) -> "AppBuilder":
+        self.app.add_middleware(
+            CORSMiddleware,
+            allow_origins=["*"],
+            allow_credentials=True,
+            allow_methods=["*"],
+            allow_headers=["*"],
+        )
         return self
 
     def build(self) -> FastAPI:
@@ -24,6 +34,10 @@ class AppBuilder:
 def create_app() -> FastAPI:
     app_builder = AppBuilder()
 
-    app = app_builder.with_exception_handlers().with_routes(api_router).build()
+    app = app_builder.\
+        with_exception_handlers()\
+        .with_cors()\
+        .with_routes(api_router)\
+        .build()
 
     return app
