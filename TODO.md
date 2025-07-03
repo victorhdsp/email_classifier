@@ -82,17 +82,26 @@
 
 ## Backlog
 
-* [ ] Limpar o textarea quando enviar textos.
-* [ ] Concatenar e persistir ultimas classificações.
-* [ ] No aside, mostrar o primeiro accordion já aberto.
-* [ ] Mesmo com arquivo ele não pegou a data.
+* [x] fix(frontend): Limpar o textarea quando enviar textos no frontend.
+* [ ] fix(backend): Adicionar um id para o conteúdo no backend.
+* [x] fix(frontend): No aside, mostrar o primeiro accordion já aberto.
+* [x] fix(frontend): Accordion não esta fechando.
+* [ ] fix(backend): Mesmo com arquivo ele não conseguiu pegar a data.
+* [x] fix(frontend): Input de upload aceitando mais arquivos que somente "txt" e "pdf".
+* [ ] fix(backend): Dar exemplos de coisas produtivas e improdutivas para o prompt. 
+* [ ] fix(backend): Diminuir a criatividade da LLM.
 
 ---
 
 ## 6. Extras (Após MVP)
 
-* [ ] Implementar envio em lote (upload múltiplo).
-* [ ] Criar onboarding simples no frontend explicando a funcionalidade.
-* [ ] Leitura e análise de TXT pequenos no frontend (<1MB).
-* [ ] Explorar integração com serviços de email (Gmail API, IMAP).
-* [ ] Cache simples para evitar chamadas repetidas à IA.
+* [ ] featere(backend): Implementar envio em lote (upload múltiplo).
+* [ ] featere(frontend): Criar onboarding simples no frontend explicando a funcionalidade.
+* [ ] featere(frontend): Leitura e análise de TXT pequenos no frontend (<1MB).
+* [ ] featere(frontend): Explorar integração com serviços de email (Gmail API, IMAP).
+* [ ] featere(backend): Cache semântico para evitar chamadas repetidas à IA.
+* [ ] featere(frontend): Adicionar persistência para os elementos já classificados.
+    - permitir remoção dos já adicionados.
+    - permitir busca dos elementos já adicionados.
+    - permitir filtragem dos elementos já adicionados.
+* [ ] feature(frontend): Adicionar transições suaves para as mudanças no frontend.

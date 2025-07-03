@@ -46,7 +46,7 @@ function FileUploadSection({ uploadedFile, setUploadedFile, isUploading }: FileU
             ref={fileInputRef}
             type="file"
             onChange={handleFileSelect}
-            accept=".txt,.eml,.pdf,.doc,.docx"
+            accept=".txt,.pdf"
             className="hidden"
             disabled={isUploading}
           />

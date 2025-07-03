@@ -6,14 +6,15 @@ import styles from './SidebarResult.module.css';
 interface ResultItemProps {
   result: EmailResult;
   isExpanded: boolean;
-  onToggleExpand: (id: string) => void;
 }
 
-function ResultItem({ result, isExpanded, onToggleExpand }: ResultItemProps) {
+function ResultItem({ result, isExpanded }: ResultItemProps) {
+  const [expanded, setExpanded] = React.useState(isExpanded);
+
   return (
     <div key={result.id} className={styles.resultItem}>
       <button
-        onClick={() => onToggleExpand(result.id)}
+        onClick={() => setExpanded(!expanded)}
         className={styles.resultButton}
       >
         <div className={styles.resultHeader}>
@@ -33,13 +34,13 @@ function ResultItem({ result, isExpanded, onToggleExpand }: ResultItemProps) {
           <div className={styles.resultActions}>
             <Clock className={styles.resultActionIcon} />
             <ChevronRight className={`${styles.resultChevron} ${
-              isExpanded ? styles.resultChevronExpanded : ''
+              expanded ? styles.resultChevronExpanded : ''
             }`} />
           </div>
         </div>
       </button>
       
-      {isExpanded && (
+      {expanded && (
         <div className={styles.expandedContent}>
           <div>
             <p className={styles.expandedContentTitle}>Conteúdo</p>

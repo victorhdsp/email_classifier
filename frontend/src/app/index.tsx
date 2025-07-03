@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import EmailForm from './components/form/EmailForm';
 import EmailSidebar from './components/sidebar/EmailSidebar';
 import { EmailResult } from './types';
@@ -8,7 +8,6 @@ function App() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [results, setResults] = useState<EmailResult[]>([]);
-  const [expandedResult, setExpandedResult] = useState<string | null>(null);
 
   const handleEmailClassified = (newResult: EmailResult) => {
     setResults(prev => [newResult, ...prev]);
@@ -21,8 +20,6 @@ function App() {
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}
         results={results}
-        expandedResult={expandedResult}
-        setExpandedResult={setExpandedResult}
       />
 
       {/* Main Content Container */}

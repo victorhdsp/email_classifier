@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './TextInputSection.module.css';
 
 interface TextInputSectionProps {
@@ -14,7 +13,7 @@ function TextInputSection({ textInput, setTextInput }: TextInputSectionProps) {
         onChange={(e) => setTextInput(e.target.value)}
         placeholder="Cole o conteúdo do email aqui..."
         rows={6}
-        className={styles.textArea}
+        className={`${styles.textArea} h-[274px]`}
       />
     </div>
   );
