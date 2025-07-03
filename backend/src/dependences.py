@@ -5,6 +5,7 @@ from src.email_analysis.by_text.controller import AnalyzeByTextController
 from src.email_analysis.shared.usecases.analize_raw_text import AnalyzeRawTextUseCase
 from src.email_analysis.shared.usecases.extract_file import ExtractFileUseCase
 from src.shared.infra.gemini_llm import GeminiService
+from src.shared.infra.hugging_llm import HuggingFaceService
 from src.shared.infra.py_mu_pdf import PyMuPDFService
 from src.shared.infra.spacy_npl import SpacyNLPAdapter
 from src.shared.services.llm import LLMService
@@ -14,11 +15,12 @@ from src.shared.services.pdf import PDFService
 load_dotenv()
 
 # General
+hugging_llm = HuggingFaceService()
 gemini_llm = GeminiService()
 spacy_nlp_adapter = SpacyNLPAdapter()
 py_mupdf_service = PyMuPDFService()
 
-llm_service = LLMService(gemini_llm)
+llm_service = LLMService(gemini_llm, hugging_llm)
 nlp_service = NLPService(spacy_nlp_adapter)
 pdf_service = PDFService(py_mupdf_service)
 

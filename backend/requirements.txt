@@ -6,3 +6,4 @@ google-genai
 PyMuPDF
 python-multipart
 starlette
+python-dateutil
