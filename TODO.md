@@ -12,49 +12,52 @@
 
 ### Protect
 
-* [ ] Implementar validação do tamanho máximo do arquivo.
-* [ ] Validar se o conteúdo existe e se o formato é aceito (pdf, txt, string).
+* [x] Implementar validação do tamanho máximo do arquivo.
+* [x] Validar se o conteúdo existe e se o formato é aceito (pdf, txt, string).
 
 ### Extract
 
-* [ ] Implementar extração do texto de arquivos PDF (usar PyPDF2 ou similar).
-* [ ] Implementar leitura direta de arquivo TXT.
-* [ ] Permitir receber texto puro sem arquivo.
+* [x] Implementar extração do texto de arquivos PDF (usar PyPDF2 ou similar).
+* [x] Implementar leitura direta de arquivo TXT.
+* [x] Permitir receber texto puro sem arquivo.
 
 ### Normalize
 
-* [ ] Implementar tratamento básico de texto (espaços, quebras de linha, minúsculas).
+* [x] Implementar tratamento básico de texto (espaços, quebras de linha, minúsculas).
 * [ ] Remover caracteres inválidos (UTF-8).
 * [ ] Remover acentos e caracteres especiais.
 * [ ] Remover cabeçalhos desnecessários (definir o que será removido).
-* [ ] Implementar pré-processamento NLP básico (stop words, lematização) — usar SpaCy ou NLTK.
+* [x] Implementar pré-processamento NLP básico (stop words, lematização) — usar SpaCy ou NLTK.
 * [ ] Extrair timestamp se presente no texto.
 
 ### Analyze
 
-* [ ] Criar integração com API de IA (OpenAI GPT ou Hugging Face).
-* [ ] Definir e montar prompt para classificação, resumo e criação do subject.
-* [ ] Implementar lógica para envio do texto pré-processado e recebimento dos dados da IA.
-* [ ] Validar formato de resposta para `subject`, `type`, `text` e `timestamp`.
+* [x] Criar integração com API de IA (OpenAI GPT ou Hugging Face).
+* [x] Definir e montar prompt para classificação, resumo e criação do subject.
+* [x] Implementar lógica para envio do texto pré-processado e recebimento dos dados da IA.
+* [x] Validar formato de resposta para `subject`, `type`, `text` e `timestamp`.
 
 ### Backend Geral
 
-* [ ] Criar endpoint API REST para receber dados do frontend (arquivo/texto).
-* [ ] Implementar tratamento de erros e respostas padronizadas.
+* [x] Criar endpoint API REST para receber dados do frontend (arquivo/texto).
+* [x] Implementar tratamento de erros e respostas padronizadas.
 * [ ] Criar testes unitários básicos para cada etapa (protect, extract, normalize, analyze).
 
 ---
 
 ## 3. Frontend - Interface
 
-* [ ] Criar formulário com input de upload (aceitando pdf, txt).
-* [ ] Implementar componente para mostrar arquivo carregado com ícone, nome, peso, progresso e botão de fechar.
-* [ ] Implementar loading no input e desabilitar submit enquanto processa.
-* [ ] Criar toggle (botão, switch ou tab) para alternar entre upload e textarea.
-* [ ] Criar textarea para entrada manual de texto.
-* [ ] Criar sidebar scrollável com accordion para mostrar `subject`, `type`, `text` e `timestamp`.
-* [ ] Implementar abertura/fechamento da sidebar e comportamento responsivo (sidebar lateral ou embaixo conforme largura).
+* [x] Criar formulário com input de upload (aceitando pdf, txt).
+* [x] Implementar componente para mostrar arquivo carregado com ícone, nome, peso, progresso e botão de fechar.
+* [x] Implementar loading no input e desabilitar submit enquanto processa.
+* [x] Criar toggle (botão, switch ou tab) para alternar entre upload e textarea.
+* [x] Criar textarea para entrada manual de texto.
+* [x] Criar sidebar scrollável com accordion para mostrar `subject`, `type`, `text` e `timestamp`.
+* [x] Implementar abertura/fechamento da sidebar e comportamento responsivo (sidebar lateral ou embaixo conforme largura).
 * [ ] Tratar responsividade geral da página.
+* [ ] Tornar formulário com tamanho fixo em ambas as direções.
+* [ ] Permitir sobreposição parcial do aside.
+* [ ] Em dispositivos pequenos remover o aside e adicionar o conteúdo abaixo do formulário.
 
 ---
 

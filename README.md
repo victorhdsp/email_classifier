@@ -15,6 +15,8 @@ O objetivo é automatizar a leitura e classificação desses emails e sugerir cl
 
 ```bash
 cd backend
+python3 -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
 uvicorn main:app --reload
 ```

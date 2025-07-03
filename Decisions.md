@@ -19,6 +19,10 @@ Confesso que python não é meu core, eu tenho experiência em Node, C, Golang e
 
 Decidi usar o `FastAPI` porque ele tem uma curva de aprendizado baixa e é bastante livre então posso usar uma arquitetura mas conveniênte, pelo que pesquisei ele funciona parecido com o express, ele é bastante popular então acredito que não vou ter problemas de compatibilidade com qualquer biblioteca que venha a precisar e caso tenha problema vai ser mais tranquilo encontrar soluções.
 
+Tomei a decisão de colocar `black` e o `ruff` para formatar os códigos e `mypy` como dependência de desenvolvimento, para ter tipagem e evitar erros, porque estava me sentindo codando as cegas.
+
+Para o llm decidi utilizar o google gemini, ele é gratuito até 1M de tokens, considerando que cada e-mail tenha 1000 tokens (o que vocês me enviaram em 334), daria suporte gratuito a 1000 e-mails gratuitos, mas específicamente escolhi usar o gemini-1.5-flash, como é para "para uma grande empresa" com um "alto volume de emails diariamente", para cada 1000 emails custaria 0.075$.
+
 ---
 
 ## **2. Frontend**
@@ -100,16 +104,17 @@ Pessoalmente eu prefiro criar a estrutura de pastas baseadas em funcionalidades 
 Para lidar com a reutilização de código criar uma shared a nivel de funcionalidade e colocar o código compartilhado lá de forma genérica, extendendo na funcionalidade de fato e para criar algo exclusivo.
 ```
 /backend
-|-- /api # esse é um exemplo de excessão
-|---- /v1 # a versão da api influencia o endpoint.
-|------ rota_1.py
-|-- /<feature>
-|---- /controllers ou controller.py
-|---- /services ou service.py
-|---- ...
-|-- /shared
-|---- /model
-|------ generic_model.py
+|-- /src
+|---- /api # esse é um exemplo de excessão
+|------ /v1 # a versão da api influencia o endpoint.
+|-------- rota_1.py
+|---- /<feature>
+|------ /controllers ou controller.py
+|------ /services ou service.py
+|------ ...
+|---- /shared
+|------ /dto
+|-------- error.py
 ```
 
 ---
@@ -139,3 +144,5 @@ A integração vai ser feito por HTTP em uma API Rest padrão, principalmente co
 - Integração com serviços de e-mail.
 
 - Fazer analise de `txt` pequeno no frontend <1MB
+
+- Fazer a analise em fila.
