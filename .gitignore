@@ -9,3 +9,4 @@ references
 **/.DS_Store
 .vscode
 *cache
+.local
