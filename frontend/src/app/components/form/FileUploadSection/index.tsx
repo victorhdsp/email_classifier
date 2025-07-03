@@ -1,20 +1,23 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { UploadedFile } from '../../../types';
 import styles from './FileUploadSection.module.css';
 import UploadButtonInitialState from './UploadButtonInitialState';
 import UploadButtonUploadingState from './UploadButtonUploadingState';
 import UploadButtonUploadedState from './UploadButtonUploadedState';
-import FilePreview from './FilePreview';
 
 interface FileUploadSectionProps {
   uploadedFile: UploadedFile | null;
   setUploadedFile: (file: UploadedFile | null) => void;
   isUploading: boolean;
-  setIsUploading: (isUploading: boolean) => void;
 }
 
-function FileUploadSection({ uploadedFile, setUploadedFile, isUploading, setIsUploading }: FileUploadSectionProps) {
+function FileUploadSection({ uploadedFile, setUploadedFile, isUploading }: FileUploadSectionProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (uploadedFile == null && fileInputRef.current)
+      fileInputRef.current.value = '';
+  }, [uploadedFile])
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -29,27 +32,6 @@ function FileUploadSection({ uploadedFile, setUploadedFile, isUploading, setIsUp
     };
 
     setUploadedFile(newFile);
-    setIsUploading(true);
-
-    // Simulate upload progress
-    const interval = setInterval(() => {
-      setUploadedFile((prev: any) => {
-        if (!prev) return null;
-        const newProgress = Math.min(prev.progress + 10, 100);
-        if (newProgress === 100) {
-          setIsUploading(false);
-          clearInterval(interval);
-        }
-        return { ...prev, progress: newProgress } as UploadedFile;
-      });
-    }, 200);
-  };
-
-  const removeFile = () => {
-    setUploadedFile(null);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = '';
-    }
   };
 
   const handleButtonClick = () => {
@@ -76,14 +58,6 @@ function FileUploadSection({ uploadedFile, setUploadedFile, isUploading, setIsUp
             <UploadButtonInitialState onClick={handleButtonClick} />
           )}
         </div>
-
-        {uploadedFile && (
-          <FilePreview
-            uploadedFile={uploadedFile}
-            isUploading={isUploading}
-            removeFile={removeFile}
-          />
-        )}
       </div>
     </div>
   );

@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Upload, FileText } from 'lucide-react';
 import * as Tabs from '@radix-ui/react-tabs';
 import FileUploadSection from '../FileUploadSection';
 import TextInputSection from '../TextInputSection';
 import SubmitButton from '../SubmitButton';
 import styles from './EmailForm.module.css';
-import { EmailResult, UploadedFile } from '../../../types';
+import { EmailResult } from '../../../types';
+import FilePreview from '../../shared/GenericLoadingMessage';
+import { useSendEmailForm } from './useSendEmailForm';
+import { ButtonToggle } from './ButtonToggle';
 
 interface EmailFormProps {
   onEmailClassified: (result: EmailResult) => void;
@@ -14,22 +17,27 @@ interface EmailFormProps {
 }
 
 function EmailForm({ onEmailClassified, setIsProcessing, isProcessing }: EmailFormProps) {
-  const [uploadMode, setUploadMode] = useState<'file' | 'text'>('file');
-  const [uploadedFile, setUploadedFile] = useState<UploadedFile | null>(null);
-  const [textInput, setTextInput] = useState('');
-  const [isUploading, setIsUploading] = useState(false);
-
+  const { 
+    isUploading,
+    uploadedFile,
+    setUploadedFile,
+    setUploadMode,
+    uploadMode,
+    textInput,
+    setTextInput,
+    sendSubmit 
+  } = useSendEmailForm(setIsProcessing);
+  
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    setIsProcessing(true);
-
-    // Simulate API call
-    setTimeout(() => {
-      setIsProcessing(false);
-    }, 2000);
+    const result = await sendSubmit();
+    if (!result) return;
+    onEmailClassified(result)
   };
 
-  const canSubmit = uploadMode === 'file' ? uploadedFile && !isUploading : textInput.trim().length > 0;
+  const canSubmit = (uploadMode === 'file' ?
+                      uploadedFile && !isUploading :
+                      textInput.trim().length > 0) || false;
 
   return (
     <form onSubmit={handleSubmit} className={styles.formContainer}>
@@ -40,28 +48,16 @@ function EmailForm({ onEmailClassified, setIsProcessing, isProcessing }: EmailFo
       >
         <div className={styles.modeToggleContainer}>
           <Tabs.List className={styles.tabsList}>
-            <Tabs.Trigger
-              value="file"
-              className={`${styles.tabTrigger} ${
-                uploadMode === 'file' 
-                  ? styles.tabTriggerActive 
-                  : styles.tabTriggerInactive
-              }`}
-            >
-              <Upload className="w-4 h-4" />
-              <span>Arquivo</span>
-            </Tabs.Trigger>
-            <Tabs.Trigger
-              value="text"
-              className={`${styles.tabTrigger} ${
-                uploadMode === 'text' 
-                  ? styles.tabTriggerActive 
-                  : styles.tabTriggerInactive
-              }`}
-            >
-              <FileText className="w-4 h-4" />
-              <span>Texto</span>
-            </Tabs.Trigger>
+            <ButtonToggle
+              value='file'
+              text='Arquivo'
+              Icon={Upload}
+            />
+            <ButtonToggle
+              value='text'
+              text='Texto'
+              Icon={FileText}
+            />
           </Tabs.List>
         </div>
 
@@ -70,7 +66,6 @@ function EmailForm({ onEmailClassified, setIsProcessing, isProcessing }: EmailFo
             uploadedFile={uploadedFile}
             setUploadedFile={setUploadedFile}
             isUploading={isUploading}
-            setIsUploading={setIsUploading}
           />
         </Tabs.Content>
 
@@ -81,6 +76,16 @@ function EmailForm({ onEmailClassified, setIsProcessing, isProcessing }: EmailFo
           />
         </Tabs.Content>
       </Tabs.Root>
+
+      {uploadedFile && (
+        <FilePreview
+          title={uploadedFile.name}
+          subtitle={`Tamanho: ${uploadedFile.size}`}
+          status={isUploading ? 'progress' : 'idle'}
+          progress={uploadedFile.progress}
+          onRemove={() => setUploadedFile(null)}
+        />
+      )}
 
       <SubmitButton
         canSubmit={canSubmit}
