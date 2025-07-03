@@ -42,6 +42,7 @@
 * [x] Criar endpoint API REST para receber dados do frontend (arquivo/texto).
 * [x] Implementar tratamento de erros e respostas padronizadas.
 * [ ] Criar testes unitários básicos para cada etapa (protect, extract, normalize, analyze).
+* [x] Criar um fallback para a API da LLM.
 
 ---
 
@@ -83,13 +84,14 @@
 ## Backlog
 
 * [x] fix(frontend): Limpar o textarea quando enviar textos no frontend.
-* [ ] fix(backend): Adicionar um id para o conteúdo no backend.
+* [x] fix(backend): Adicionar um id para o conteúdo no backend.
 * [x] fix(frontend): No aside, mostrar o primeiro accordion já aberto.
 * [x] fix(frontend): Accordion não esta fechando.
-* [ ] fix(backend): Mesmo com arquivo ele não conseguiu pegar a data.
+* [x] fix(backend): Mesmo com arquivo ele não conseguiu pegar a data.
 * [x] fix(frontend): Input de upload aceitando mais arquivos que somente "txt" e "pdf".
-* [ ] fix(backend): Dar exemplos de coisas produtivas e improdutivas para o prompt. 
-* [ ] fix(backend): Diminuir a criatividade da LLM.
+* [x] fix(backend): Dar exemplos de coisas produtivas e improdutivas para o prompt. 
+* [x] fix(backend): Diminuir a criatividade da LLM.
+* [x] fix(frontend): Mudar textos relacionados a data e ocultar quando não tiver.
 
 ---
 
@@ -105,3 +107,4 @@
     - permitir busca dos elementos já adicionados.
     - permitir filtragem dos elementos já adicionados.
 * [ ] feature(frontend): Adicionar transições suaves para as mudanças no frontend.
+* [ ] treinar um modelo discriminativo para fazer a classificação.

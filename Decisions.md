@@ -21,7 +21,9 @@ Decidi usar o `FastAPI` porque ele tem uma curva de aprendizado baixa e é basta
 
 Tomei a decisão de colocar `black` e o `ruff` para formatar os códigos e `mypy` como dependência de desenvolvimento, para ter tipagem e evitar erros, porque estava me sentindo codando as cegas.
 
-Para o llm decidi utilizar o google gemini, ele é gratuito até 1M de tokens, considerando que cada e-mail tenha 1000 tokens (o que vocês me enviaram em 334), daria suporte gratuito a 1000 e-mails gratuitos, mas específicamente escolhi usar o gemini-1.5-flash, como é para "para uma grande empresa" com um "alto volume de emails diariamente", para cada 1000 emails custaria 0.075$.
+Para o llm decidi utilizar o `google gemini`, mais específicamente o "gemini-1.5-flash", ele tem o custo de 0.075$ para cada 1M de tokens, considerando que cada e-mail tenha 1000 tokens (o que vocês me enviaram em 334), o custo seria 0.075$ para cada 1000 e-mails. Outro motivo para a escolha foi o fato dele ter um nível gratuito de 1M de tokens sendo 50 requisições/dia.
+
+Coloquei como um fallback para o caso do Gemini falhar, seja pelo excesso do limite gratuito, por estar fora do ar ou por algum erro, nesse caso estou usando o `hugging faces`, com o modelo `mistral-7b`, a versão gratuita do hugging faces tem o problema de ser meio lenta, por isso estou usando como fallback e não como principal, relação a custos o hugging faces cobra por hardware e não por token.
 
 ---
 
@@ -150,3 +152,5 @@ A integração vai ser feito por HTTP em uma API Rest padrão, principalmente co
 - Fazer analise de `txt` pequeno no frontend <1MB
 
 - Fazer a analise em fila.
+
+- 
