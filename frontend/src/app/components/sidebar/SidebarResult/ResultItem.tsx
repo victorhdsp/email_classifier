@@ -2,6 +2,7 @@ import React from 'react';
 import { ChevronRight, Clock, Tag } from 'lucide-react';
 import { EmailResult } from '../../../types';
 import styles from './SidebarResult.module.css';
+import { getLocaleDateByString } from '../../../../shared/utils/date';
 
 interface ResultItemProps {
   result: EmailResult;
@@ -46,10 +47,14 @@ function ResultItem({ result, isExpanded }: ResultItemProps) {
             <p className={styles.expandedContentTitle}>Conteúdo</p>
             <p className={styles.expandedContentText}>{result.text}</p>
           </div>
-          <div>
-            <p className={styles.expandedContentTitle}>Timestamp</p>
-            <p className={styles.expandedContentText}>{result.timestamp}</p>
-          </div>
+          { result.timestamp && (
+            <div>
+              <p className={styles.expandedContentTitle}>Data</p>
+              <p className={styles.expandedContentText}>
+                {getLocaleDateByString(result.timestamp)}
+              </p>
+            </div>
+          )}
         </div>
       )}
     </div>
