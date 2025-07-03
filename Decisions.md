@@ -53,6 +53,10 @@ O `formulário` deve ter um tamanho médio para que ele possa se mover em relaç
 
 A `sidebar` em telas maiores deve cobrir a lateral direita da tela quando estiver aberta tomando no minimo `'y width`, no caso do espaço disponível ser insuficiente ou seja `'y + ('x / 2)`, então o conteúdo deve ser apresentado abaixo e não na lateral no tamanho de `'x width` para manter a consistência visual.
 
+### Feedback
+
+Para o `formulário` vou utilizar uma barra de progresso que determina o quanto do arquivo já foi enviado para o servidor e após isso, vai se iniciar um segundo loading avisando que está analisando para que o usuário tenha alguma atualização sobre o que esta acontecendo.
+
 ---
 
 ## **3. Backend Python**

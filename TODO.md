@@ -63,8 +63,8 @@
 
 ## 4. Integração
 
-* [ ] Implementar chamada HTTP do frontend para backend (upload e texto).
-* [ ] Consumir resposta e popular sidebar com dados da análise.
+* [x] Implementar chamada HTTP do frontend para backend (upload e texto).
+* [x] Consumir resposta e popular sidebar com dados da análise.
 * [ ] Tratar erros e mostrar mensagens amigáveis.
 
 ---
@@ -77,6 +77,15 @@
 * [ ] Escrever README final com instruções claras para rodar local e deploy.
 * [ ] Preparar documentação mínima da API (endpoint, parâmetros, resposta).
 * [ ] Criar vídeo demonstrativo (3-5 minutos) explicando a solução.
+
+---
+
+## Backlog
+
+* [ ] Limpar o textarea quando enviar textos.
+* [ ] Concatenar e persistir ultimas classificações.
+* [ ] No aside, mostrar o primeiro accordion já aberto.
+* [ ] Mesmo com arquivo ele não pegou a data.
 
 ---
 
