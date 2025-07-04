@@ -5,6 +5,7 @@ import SidebarToggleButton from './SidebarAttributes/SidebarToggleButton';
 import SidebarHeader from './SidebarAttributes/SidebarHeader';
 import NoResultsDisplay from './SidebarResult/NoResultsDisplay';
 import ResultItem from './SidebarResult/ResultItem';
+import * as Accordion from '@radix-ui/react-accordion';
 
 interface EmailSidebarProps {
   sidebarOpen: boolean;
@@ -14,7 +15,6 @@ interface EmailSidebarProps {
 }
 
 function EmailSidebar({ sidebarOpen, setSidebarOpen, results, onRemoveResult }: EmailSidebarProps) {
-  const [expandedResult, setExpandedResult] = useState<string | null>(results.length > 0 ? results[0].id : null);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [filterType, setFilterType] = useState<'all' | 'Produtivo' | 'Improdutivo'>('all');
 
@@ -52,7 +52,7 @@ function EmailSidebar({ sidebarOpen, setSidebarOpen, results, onRemoveResult }: 
         data-tour="sidebar-results"
       >
         <div className={styles.sidebarContent}>
-          <SidebarHeader resultsCount={filteredResults.length} />
+          <SidebarHeader />
 
           <div className={styles.filterContainer}>
             <input
@@ -77,17 +77,15 @@ function EmailSidebar({ sidebarOpen, setSidebarOpen, results, onRemoveResult }: 
             {filteredResults.length === 0 ? (
               <NoResultsDisplay />
             ) : (
-              <div className={styles.resultsList}>
+              <Accordion.Root type="single" collapsible className={styles.resultsList}>
                 {filteredResults.map((result) => (
                   <ResultItem
                     key={result.id}
                     result={result}
-                    isExpanded={expandedResult === result.id}
-                    onToggleExpand={() => setExpandedResult(expandedResult === result.id ? null : result.id)}
                     onRemove={onRemoveResult}
                   />
                 ))}
-              </div>
+              </Accordion.Root>
             )}
           </div>
         </div>
