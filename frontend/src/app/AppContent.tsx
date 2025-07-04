@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import EmailForm from './components/form';
 import EmailSidebar from './components/sidebar';
 import { EmailResult } from './types';
@@ -7,12 +7,21 @@ import tourStyles from './components/shared/tour/Tour.module.scss';
 import { useToast } from './components/shared/Toast/context';
 import { useTour } from '@reactour/tour';
 import { HelpCircle } from 'lucide-react';
+import { useSidebarState } from './components/sidebar/useSidebarState';
 
 function AppContent() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { setSidebarOpen, sidebarOpen } = useSidebarState();
   const [results, setResults] = useState<EmailResult[]>([]);
   const toast = useToast();
   const { setIsOpen } = useTour();
+
+  useEffect(() => {
+    const hasSeenTour = localStorage.getItem('hasSeenTour');
+    if (!hasSeenTour) {
+      setIsOpen(true);
+      localStorage.setItem('hasSeenTour', 'true');
+    }
+  }, [setIsOpen]);
 
   const handleEmailClassified = (newResult: EmailResult) => {
     setResults(prev => [newResult, ...prev]);
