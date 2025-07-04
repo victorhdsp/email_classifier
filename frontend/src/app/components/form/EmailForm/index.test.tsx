@@ -1,28 +1,30 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import EmailForm from './index';
 import { vi } from 'vitest';
+import { ToastProvider } from '../../shared/Toast/provider';
+import React from 'react';
+import axios from 'axios';
+
+vi.mock('axios');
+const mockedAxios = axios as jest.Mocked<typeof axios>;
+
+const renderWithToast = (component: React.ReactElement) => {
+  return render(<ToastProvider>{component}</ToastProvider>);
+};
 
 describe('EmailForm', () => {
   const mockOnEmailClassified = vi.fn();
-  const mockSetIsProcessing = vi.fn();
 
   beforeEach(() => {
     vi.clearAllMocks();
-  });
-
-  afterEach(() => {
-    vi.useRealTimers();
+    mockedAxios.post.mockResolvedValue({
+      data: { type: 'recruitment', score: 0.9, explanation: 'test' },
+    });
   });
 
   test('renders correctly and switches between file and text tabs', async () => {
-    render(
-      <EmailForm
-        onEmailClassified={mockOnEmailClassified}
-        setIsProcessing={mockSetIsProcessing}
-        isProcessing={false}
-      />
-    );
+    renderWithToast(<EmailForm onEmailClassified={mockOnEmailClassified} />);
 
     expect(screen.getByRole('tab', { name: /Arquivo/i })).toHaveAttribute('data-state', 'active');
     expect(screen.getByText(/selecionar arquivo/i)).toBeInTheDocument();
@@ -38,13 +40,7 @@ describe('EmailForm', () => {
   });
 
   test('submits the form with text input and calls onEmailClassified', async () => {
-    render(
-      <EmailForm
-        onEmailClassified={mockOnEmailClassified}
-        setIsProcessing={mockSetIsProcessing}
-        isProcessing={false}
-      />
-    );
+    renderWithToast(<EmailForm onEmailClassified={mockOnEmailClassified} />);
 
     const user = userEvent.setup();
     
@@ -53,17 +49,13 @@ describe('EmailForm', () => {
     expect(screen.getByPlaceholderText(/cole o conteúdo do email aqui.../i)).toBeInTheDocument();
 
     const textarea = screen.getByPlaceholderText(/cole o conteúdo do email aqui.../i);
-    fireEvent.change(textarea, { target: { value: 'Test email content' } });
+    await user.type(textarea, 'Test email content');
 
     const submitButton = screen.getByRole('button', { name: /classificar email/i });
     await user.click(submitButton);
-    
-    expect(mockSetIsProcessing).toHaveBeenCalledWith(true);
-
-    await new Promise(resolve => setTimeout(resolve, 2000));
 
     await waitFor(() => {
-      expect(mockSetIsProcessing).toHaveBeenCalledWith(false);
+      expect(mockOnEmailClassified).toHaveBeenCalledWith({ type: 'recruitment', score: 0.9, explanation: 'test' });
     });
   });
 });

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { EmailResult } from '../../../types';
 import styles from './EmailSidebar.module.css';
 import SidebarToggleButton from '../SidebarAttributes/SidebarToggleButton';
@@ -12,6 +13,8 @@ interface EmailSidebarProps {
 }
 
 function EmailSidebar({ sidebarOpen, setSidebarOpen, results }: EmailSidebarProps) {
+  const [expandedResult, setExpandedResult] = useState<string | null>(results.length > 0 ? results[0].id : null);
+
   return (
     <>
       <SidebarToggleButton
@@ -31,11 +34,12 @@ function EmailSidebar({ sidebarOpen, setSidebarOpen, results }: EmailSidebarProp
               <NoResultsDisplay />
             ) : (
               <div className={styles.resultsList}>
-                {results.map((result, index) => (
+                {results.map((result) => (
                   <ResultItem
                     key={result.id}
                     result={result}
-                    isExpanded={index === 0}
+                    isExpanded={expandedResult === result.id}
+                    onToggleExpand={() => setExpandedResult(expandedResult === result.id ? null : result.id)}
                   />
                 ))}
               </div>

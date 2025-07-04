@@ -7,15 +7,14 @@ import { getLocaleDateByString } from '../../../../shared/utils/date';
 interface ResultItemProps {
   result: EmailResult;
   isExpanded: boolean;
+  onToggleExpand: () => void;
 }
 
-function ResultItem({ result, isExpanded }: ResultItemProps) {
-  const [expanded, setExpanded] = React.useState(isExpanded);
-
+function ResultItem({ result, isExpanded, onToggleExpand }: ResultItemProps) {
   return (
     <div key={result.id} className={styles.resultItem}>
       <button
-        onClick={() => setExpanded(!expanded)}
+        onClick={onToggleExpand}
         className={styles.resultButton}
       >
         <div className={styles.resultHeader}>
@@ -35,13 +34,13 @@ function ResultItem({ result, isExpanded }: ResultItemProps) {
           <div className={styles.resultActions}>
             <Clock className={styles.resultActionIcon} />
             <ChevronRight className={`${styles.resultChevron} ${
-              expanded ? styles.resultChevronExpanded : ''
+              isExpanded ? styles.resultChevronExpanded : ''
             }`} />
           </div>
         </div>
       </button>
       
-      {expanded && (
+      {isExpanded && (
         <div className={styles.expandedContent}>
           <div>
             <p className={styles.expandedContentTitle}>Conteúdo</p>

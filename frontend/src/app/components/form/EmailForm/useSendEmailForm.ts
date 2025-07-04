@@ -1,90 +1,110 @@
 import { useState } from "react";
 import { EmailResult, UploadedFile } from "../../../types";
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
+import { useToast } from "../../shared/Toast/context";
 
-axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000';
+axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL;
 
-function sendText(text: string) {
-  if (!text.trim())
-    throw new Error("Text input is empty");
+const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024; // 10 MB
+const SUPPORTED_FILE_TYPES = ['text/plain', 'application/pdf'];
 
-  return axios.post('/v1/email/analyze/json', { text });
+function validateFile(file: File) {
+    if (!SUPPORTED_FILE_TYPES.includes(file.type)) {
+        throw new Error("Unsupported file type. Only .txt and .pdf are allowed.");
+    }
+    if (file.size > MAX_FILE_SIZE_BYTES) {
+        throw new Error("File size exceeds 10 MB limit");
+    }
+    if (file.size === 0) {
+        throw new Error("File is empty");
+    }
 }
 
-function protectFile(uploadedFile: UploadedFile) {
-  if (!['text/plain', 'application/pdf'].includes(uploadedFile.file.type))
-    throw new Error("Unsupported file type. Only .txt and .pdf are allowed.");
-
-  if (uploadedFile.file.size > 10 * 1024 * 1024) // 10 MB limit
-    throw new Error("File size exceeds 10 MB limit");
-
-  if (uploadedFile.file.size === 0)
-    throw new Error("File is empty");
+async function analyzeText(text: string): Promise<EmailResult> {
+    if (!text.trim()) {
+        throw new Error("Text input is empty");
+    }
+    const response = await axios.post('/v1/email/analyze/json', { text });
+    return response.data;
 }
 
-export function useSendEmailForm(setIsProcessing: (isProcessing: boolean) => void) {
-  const [isUploading, setIsUploading] = useState(false);
-  const [uploadedFile, setUploadedFile] = useState<UploadedFile | null>(null);
-  const [uploadMode, setUploadMode] = useState<'file' | 'text'>('file');
-  const [textInput, setTextInput] = useState('');
-
-  function sendFile() {
+async function analyzeFile(file: File, onUploadProgress: (progress: number) => void): Promise<EmailResult> {
     const formData = new FormData();
+    formData.append('file', file);
 
-    if (!uploadedFile || !uploadedFile.file)
-      throw new Error("No file to upload");
-
-    protectFile(uploadedFile);
-
-    formData.append('file', uploadedFile.file);
-
-    return axios.post('/v1/email/analyze/file', formData, {
-      onUploadProgress: ({ loaded, total }) => {
-        const progress = Math.round((loaded * 100) / (total || 1));
-        setUploadedFile({ ...uploadedFile, progress });
-      },
+    const response = await axios.post('/v1/email/analyze/file', formData, {
+        onUploadProgress: ({ loaded, total }) => {
+            const progress = total ? Math.round((loaded * 100) / total) : 0;
+            onUploadProgress(progress);
+        },
     });
-  }
+    return response.data;
+}
 
-  async function sendSubmit(): Promise<EmailResult | null> {
-    setIsProcessing(true);
-    setIsUploading(true);
+export function useSendEmailForm() {
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [uploadedFile, setUploadedFile] = useState<UploadedFile | null>(null);
+    const [uploadMode, setUploadMode] = useState<'file' | 'text'>('file');
+    const [textInput, setTextInput] = useState('');
+    const toast = useToast();
 
-    let response;
+    const handleFileSubmit = async (file: File): Promise<EmailResult> => {
+        validateFile(file);
 
-    try {
-      if (uploadMode === 'file')
-        response = await sendFile();
-      else if (uploadMode === 'text')
-        response = await sendText(textInput);
+        // Smart upload: send small text files as text for efficiency
+        if (file.type === 'text/plain' && file.size < 1024 * 1024) {
+            const text = await file.text();
+            return analyzeText(text);
+        }
 
-      if (!response || !response)
-        throw new Error("No data received from server");
-
-    } catch (error) {
-      setIsProcessing(false);
-      setIsUploading(false);
-
-      console.error("Error during file upload or text submission:", error);
-      return null;
+        return analyzeFile(file, (progress) => {
+            setUploadedFile((current) => current ? { ...current, progress } : null);
+        });
     };
 
-    setIsProcessing(false);
-    setIsUploading(false);
-    setUploadedFile(null);
-    setTextInput('');
+    const handleSubmit = async (): Promise<EmailResult | null> => {
+        setIsSubmitting(true);
 
-    return response.data;
-  }
+        try {
+            let result: EmailResult;
 
-  return {
-    isUploading,
-    uploadedFile,
-    setUploadedFile,
-    uploadMode,
-    setUploadMode,
-    textInput,
-    setTextInput,
-    sendSubmit
-  };
+            if (uploadMode === 'file') {
+                if (!uploadedFile?.file) throw new Error("No file selected.");
+                result = await handleFileSubmit(uploadedFile.file);
+            } else {
+                result = await analyzeText(textInput);
+            }
+
+            setUploadedFile(null);
+            setTextInput('');
+            return result;
+
+        } catch (error) {
+            const errorMessage = error instanceof AxiosError
+                ? error.response?.data?.error || error.message
+                : (error as Error).message;
+
+            toast.showToast({
+                title: 'Ocorreu um erro',
+                description: errorMessage,
+                variant: 'error'
+            });
+
+            console.error("Error during submission:", error);
+            return null;
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
+    return {
+        isSubmitting,
+        uploadedFile,
+        setUploadedFile,
+        uploadMode,
+        setUploadMode,
+        textInput,
+        setTextInput,
+        handleSubmit,
+    };
 }

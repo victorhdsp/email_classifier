@@ -5,7 +5,6 @@ import userEvent from '@testing-library/user-event';
 
 describe('EmailSidebar', () => {
   const mockSetSidebarOpen = vi.fn();
-  const mockSetExpandedResult = vi.fn();
 
   const mockResults = [
     {
@@ -34,8 +33,6 @@ describe('EmailSidebar', () => {
         sidebarOpen={true}
         setSidebarOpen={mockSetSidebarOpen}
         results={mockResults}
-        expandedResult={null}
-        setExpandedResult={mockSetExpandedResult}
       />
     );
 
@@ -53,8 +50,6 @@ describe('EmailSidebar', () => {
         sidebarOpen={false}
         setSidebarOpen={mockSetSidebarOpen}
         results={mockResults}
-        expandedResult={null}
-        setExpandedResult={mockSetExpandedResult}
       />
     );
 
@@ -66,23 +61,28 @@ describe('EmailSidebar', () => {
     expect(mockSetSidebarOpen).toHaveBeenCalledWith(true);
   });
 
-  test('renders results and expands them', () => {
+  test('renders results and expands them correctly', async () => {
     render(
       <EmailSidebar
         sidebarOpen={true}
         setSidebarOpen={mockSetSidebarOpen}
         results={mockResults}
-        expandedResult={null}
-        setExpandedResult={mockSetExpandedResult}
       />
     );
+    const user = userEvent.setup();
 
-    // Check if results are rendered
+    // Check if results are rendered and the first one is expanded by default
     expect(screen.getByText('Test Subject 1')).toBeInTheDocument();
+    expect(screen.getByText('Test text 1')).toBeInTheDocument();
     expect(screen.getByText('Test Subject 2')).toBeInTheDocument();
+    expect(screen.queryByText('Test text 2')).not.toBeInTheDocument();
 
-    // Expand first result
-    fireEvent.click(screen.getAllByText('Test Subject 1')[0]);
-    expect(mockSetExpandedResult).toHaveBeenCalledWith('1');
+    // Click the first result to collapse it
+    await user.click(screen.getByText(/Test Subject 1/i));
+    expect(screen.queryByText('Test text 1')).not.toBeInTheDocument();
+
+    // Click the second result to expand it
+    await user.click(screen.getByText(/Test Subject 2/i));
+    expect(screen.getByText('Test text 2')).toBeInTheDocument();
   });
 });

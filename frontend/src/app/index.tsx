@@ -3,15 +3,22 @@ import EmailForm from './components/form/EmailForm';
 import EmailSidebar from './components/sidebar/EmailSidebar';
 import { EmailResult } from './types';
 import styles from './App.module.css';
+import { useToast } from './components/shared/Toast/context';
 
 function App() {
-  const [isProcessing, setIsProcessing] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [results, setResults] = useState<EmailResult[]>([]);
+  const toast = useToast();
 
   const handleEmailClassified = (newResult: EmailResult) => {
     setResults(prev => [newResult, ...prev]);
     setSidebarOpen(true);
+
+    toast.showToast({
+      title: 'E-mail classificado com sucesso!',
+      description: `O e-mail foi classificado como ${newResult.type}.`,
+      variant: 'success'
+    })
   };
 
   return (
@@ -29,8 +36,6 @@ function App() {
         <div className={styles.maxWidthContainer}>
           <EmailForm
             onEmailClassified={handleEmailClassified}
-            setIsProcessing={setIsProcessing}
-            isProcessing={isProcessing}
           />
         </div>
       </div>

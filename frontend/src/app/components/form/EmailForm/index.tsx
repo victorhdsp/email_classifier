@@ -12,36 +12,33 @@ import { ButtonToggle } from './ButtonToggle';
 
 interface EmailFormProps {
   onEmailClassified: (result: EmailResult) => void;
-  setIsProcessing: (isProcessing: boolean) => void;
-  isProcessing: boolean;
 }
 
-function EmailForm({ onEmailClassified, setIsProcessing, isProcessing }: EmailFormProps) {
-  const { 
-    isUploading,
+function EmailForm({ onEmailClassified }: EmailFormProps) {
+  const {
+    isSubmitting,
     uploadedFile,
     setUploadedFile,
-    setUploadMode,
     uploadMode,
+    setUploadMode,
     textInput,
     setTextInput,
-    sendSubmit 
-  } = useSendEmailForm(setIsProcessing);
-  
-  const handleSubmit = async (event: React.FormEvent) => {
+    handleSubmit: sendSubmit,
+  } = useSendEmailForm();
+
+  const handleFormSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     const result = await sendSubmit();
-    if (!result) return;
-    onEmailClassified(result)
+    if (result) {
+      onEmailClassified(result);
+    }
   };
 
-  const canSubmit = (uploadMode === 'file' ?
-                      uploadedFile && !isUploading :
-                      textInput.trim().length > 0) || false;
+  const canSubmit = (uploadMode === 'file' ? !!uploadedFile : textInput.trim().length > 0) && !isSubmitting;
 
   return (
-    <form onSubmit={handleSubmit} className={styles.formContainer}>
-      <Tabs.Root 
+    <form onSubmit={handleFormSubmit} className={styles.formContainer}>
+      <Tabs.Root
         className="flex flex-col"
         value={uploadMode}
         onValueChange={(value) => setUploadMode(value as 'file' | 'text')}
@@ -65,7 +62,7 @@ function EmailForm({ onEmailClassified, setIsProcessing, isProcessing }: EmailFo
           <FileUploadSection
             uploadedFile={uploadedFile}
             setUploadedFile={setUploadedFile}
-            isUploading={isUploading}
+            isUploading={isSubmitting}
           />
         </Tabs.Content>
 
@@ -81,7 +78,7 @@ function EmailForm({ onEmailClassified, setIsProcessing, isProcessing }: EmailFo
         <FilePreview
           title={uploadedFile.name}
           subtitle={`Tamanho: ${uploadedFile.size}`}
-          status={isUploading ? 'progress' : 'idle'}
+          status={isSubmitting ? 'progress' : 'idle'}
           progress={uploadedFile.progress}
           onRemove={() => setUploadedFile(null)}
         />
@@ -89,7 +86,7 @@ function EmailForm({ onEmailClassified, setIsProcessing, isProcessing }: EmailFo
 
       <SubmitButton
         canSubmit={canSubmit}
-        isProcessing={isProcessing}
+        isProcessing={isSubmitting}
       />
     </form>
   );
