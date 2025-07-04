@@ -12,6 +12,8 @@ Por mais que inicialmente não tenha muitas dependência, se no futuro quisermos
 
 Decidi usar React para o frontend, por 2 motívos, inicialmente minha ideia era usar `preact` para criar o frontend por ter a maior parte da API e ser infinitamente mais leve, porém ele não tem suporte a muitas bibliotecas "react-friedly" e isso limita o que da para construir no frontend considerando o tempo que eu tenho, esse foi o primeiro motivo mas existem outros frameworks que tem o suporte a bibliotecas de UI por exemplo como o `svelte` e o `solid`, minha ideia inicial de usar `preact` era por ser fácil de escalar para o `react` comum e por consequência fácil de escalar para um `next.js`, a escolha do caminho `react` me parece certa porque é uma tecnologia que vocês já trabalham e eu nem cogitei utilizar HTML vanilla porque a falta do `jsx` tornaria trabalhoso fazer algo elaborado.
 
+Adicionei o tailwind por conveniência ele torna a criação do css mais rápida e fácil e mantive ele na versão 3, porque a versão 4 dele `limitou` uma função muito importante que é usar o `@apply` em arquivos css, minha escolha foi entre velocidade de compilação e desenvolvimento e qualidade de desenvolvimento, preferi manter o estilo separado, porque acho mais organizado.
+
 
 ### Escolher stack para o backend.
 
