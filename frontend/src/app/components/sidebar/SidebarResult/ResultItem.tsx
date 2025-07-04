@@ -1,7 +1,7 @@
 import React from 'react';
 import { ChevronRight, Clock, Tag } from 'lucide-react';
 import { EmailResult } from '../../../types';
-import styles from './SidebarResult.module.css';
+import styles from './SidebarResult.module.scss';
 import { getLocaleDateByString } from '../../../../shared/utils/date';
 
 interface ResultItemProps {

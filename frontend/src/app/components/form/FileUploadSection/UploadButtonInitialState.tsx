@@ -1,5 +1,5 @@
 import { Upload } from 'lucide-react';
-import styles from './FileUploadSection.module.css';
+import styles from './FileUploadSection.module.scss';
 
 interface UploadButtonInitialStateProps {
   onClick: () => void;

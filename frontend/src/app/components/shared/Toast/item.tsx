@@ -1,6 +1,6 @@
 import { X, CheckCircle2, XCircle } from 'lucide-react';
 import * as RadixToast from '@radix-ui/react-toast';
-import styles from './item.module.css';
+import styles from './item.module.scss';
 import { ToastMessage } from './provider';
 
 interface ToastItemProps {

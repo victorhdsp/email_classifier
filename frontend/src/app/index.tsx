@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import EmailForm from './components/form/EmailForm';
-import EmailSidebar from './components/sidebar/EmailSidebar';
+import EmailForm from './components/form';
+import EmailSidebar from './components/sidebar';
 import { EmailResult } from './types';
-import styles from './App.module.css';
+import styles from './App.module.scss';
 import { useToast } from './components/shared/Toast/context';
 
 function App() {

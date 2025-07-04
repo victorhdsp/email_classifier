@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { FileText, Loader2, X } from 'lucide-react';
-import styles from './FilePreview.module.css';
+import styles from './FilePreview.module.scss';
 
 interface FilePreviewProps {
   title: string;

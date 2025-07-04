@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { EmailResult } from '../../../types';
-import styles from './EmailSidebar.module.css';
-import SidebarToggleButton from '../SidebarAttributes/SidebarToggleButton';
-import SidebarHeader from '../SidebarAttributes/SidebarHeader';
-import NoResultsDisplay from '../SidebarResult/NoResultsDisplay';
-import ResultItem from '../SidebarResult/ResultItem';
+import { EmailResult } from '../../types';
+import styles from './EmailSidebar.module.scss';
+import SidebarToggleButton from './SidebarAttributes/SidebarToggleButton';
+import SidebarHeader from './SidebarAttributes/SidebarHeader';
+import NoResultsDisplay from './SidebarResult/NoResultsDisplay';
+import ResultItem from './SidebarResult/ResultItem';
 
 interface EmailSidebarProps {
   sidebarOpen: boolean;

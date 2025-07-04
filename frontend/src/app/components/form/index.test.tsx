@@ -2,7 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import EmailForm from './index';
 import { vi } from 'vitest';
-import { ToastProvider } from '../../shared/Toast/provider';
+import { ToastProvider } from '../shared/Toast/provider';
 import React from 'react';
 import axios from 'axios';
 

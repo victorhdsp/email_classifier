@@ -1,6 +1,6 @@
 import React from 'react';
 import { Mail } from 'lucide-react';
-import styles from './SidebarResult.module.css';
+import styles from './SidebarResult.module.scss';
 
 function NoResultsDisplay() {
   return (

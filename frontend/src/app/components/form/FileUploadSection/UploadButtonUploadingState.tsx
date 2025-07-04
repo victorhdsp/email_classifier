@@ -1,5 +1,5 @@
 import { Loader2 } from 'lucide-react';
-import styles from './FileUploadSection.module.css';
+import styles from './FileUploadSection.module.scss';
 
 interface UploadButtonUploadingStateProps {
   onClick: () => void;

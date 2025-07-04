@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { UploadedFile } from '../../../types';
-import styles from './FileUploadSection.module.css';
+import styles from './FileUploadSection.module.scss';
 import UploadButtonInitialState from './UploadButtonInitialState';
 import UploadButtonUploadingState from './UploadButtonUploadingState';
 import UploadButtonUploadedState from './UploadButtonUploadedState';
