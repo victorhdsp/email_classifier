@@ -149,8 +149,6 @@ A integração vai ser feito por HTTP em uma API Rest padrão, principalmente co
 
 - Integração com serviços de e-mail.
 
-- Fazer analise de `txt` pequeno no frontend <1MB
-
 - Fazer a analise em fila.
 
 - 

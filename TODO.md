@@ -28,7 +28,7 @@
 * [ ] Remover acentos e caracteres especiais.
 * [ ] Remover cabeçalhos desnecessários (definir o que será removido).
 * [x] Implementar pré-processamento NLP básico (stop words, lematização) — usar SpaCy ou NLTK.
-* [ ] Extrair timestamp se presente no texto.
+* [x] Extrair timestamp se presente no texto.
 
 ### Analyze
 
@@ -66,15 +66,15 @@
 
 * [x] Implementar chamada HTTP do frontend para backend (upload e texto).
 * [x] Consumir resposta e popular sidebar com dados da análise.
-* [ ] Tratar erros e mostrar mensagens amigáveis.
+* [x] Tratar erros e mostrar mensagens amigáveis.
 
 ---
 
 ## 5. Deploy e Documentação
 
-* [ ] Preparar scripts para deploy backend (ex: Dockerfile, requirements.txt).
-* [ ] Deploy backend em plataforma gratuita (Heroku, Render, etc.).
-* [ ] Preparar deploy frontend (Vercel, Netlify, etc.).
+* [x] Preparar scripts para deploy backend (ex: Dockerfile, requirements.txt).
+* [x] Deploy backend em plataforma gratuita (Heroku, Render, etc.).
+* [x] Preparar deploy frontend (Vercel, Netlify, etc.).
 * [ ] Escrever README final com instruções claras para rodar local e deploy.
 * [ ] Preparar documentação mínima da API (endpoint, parâmetros, resposta).
 * [ ] Criar vídeo demonstrativo (3-5 minutos) explicando a solução.
@@ -92,6 +92,7 @@
 * [x] fix(backend): Dar exemplos de coisas produtivas e improdutivas para o prompt. 
 * [x] fix(backend): Diminuir a criatividade da LLM.
 * [x] fix(frontend): Mudar textos relacionados a data e ocultar quando não tiver.
+* [ ] fix(frontend): Selecionar um arquivo e ir para o campo de texto deve ocultar a caixa de aviso.
 
 ---
 
