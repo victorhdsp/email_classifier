@@ -24,9 +24,9 @@
 ### Normalize
 
 * [x] Implementar tratamento básico de texto (espaços, quebras de linha, minúsculas).
-* [ ] Remover caracteres inválidos (UTF-8).
-* [ ] Remover acentos e caracteres especiais.
-* [ ] Remover cabeçalhos desnecessários (definir o que será removido).
+* [x] Remover caracteres inválidos (UTF-8).
+* [x] Remover acentos e caracteres especiais.
+* [x] Remover cabeçalhos desnecessários (definir o que será removido).
 * [x] Implementar pré-processamento NLP básico (stop words, lematização) — usar SpaCy ou NLTK.
 * [x] Extrair timestamp se presente no texto.
 
@@ -41,7 +41,7 @@
 
 * [x] Criar endpoint API REST para receber dados do frontend (arquivo/texto).
 * [x] Implementar tratamento de erros e respostas padronizadas.
-* [ ] Criar testes unitários básicos para cada etapa (protect, extract, normalize, analyze).
+* [x] Criar testes unitários básicos para cada etapa (protect, extract, normalize, analyze).
 * [x] Criar um fallback para a API da LLM.
 
 ---
