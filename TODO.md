@@ -99,7 +99,7 @@
 ## 6. Extras (Após MVP)
 
 * [x] featere(frontend): Leitura e análise de TXT pequenos no frontend (<1MB). ***!
-* [ ] featere(frontend): Criar onboarding simples no frontend explicando a funcionalidade. **!
+* [x] featere(frontend): Criar onboarding simples no frontend explicando a funcionalidade. **!
 
 * [ ] featere(backend): Cache semântico para evitar chamadas repetidas à IA. ***!!
     [ ] adicionar banco de dados

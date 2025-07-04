@@ -61,6 +61,10 @@ A `sidebar` em telas maiores deve cobrir a lateral direita da tela quando estive
 
 Para o `formulário` vou utilizar uma barra de progresso que determina o quanto do arquivo já foi enviado para o servidor e após isso, vai se iniciar um segundo loading avisando que está analisando para que o usuário tenha alguma atualização sobre o que esta acontecendo.
 
+Foi adicionado um toast para avisar ao usuário sobre eventuais erros e ao adicionar novos resultados.
+
+Foi adicionado um botão na extremidade inferior direita que inicia um onboarding para o que o usuário tenha uma baixa curva de aprendizado, o onboarding tambem é executado na primeira vez que o usuário abre o programa (nesse caso por navegador).
+
 ---
 
 ## **3. Backend Python**
