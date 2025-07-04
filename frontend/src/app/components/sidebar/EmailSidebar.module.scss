@@ -21,6 +21,18 @@
       @apply divide-y divide-gray-100;
     }
   }
+
+  .filterContainer {
+    @apply flex px-6 py-3 space-x-3;
+
+    .searchBar {
+      @apply w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm;
+    }
+
+    .filterSelect {
+      @apply w-full max-w-28 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-xs;
+    }
+  }
 }
 
 @media screen and (max-width: 768px) {

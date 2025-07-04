@@ -70,6 +70,10 @@
             @apply rotate-90;
           }
         }
+
+        .removeButton {
+          @apply p-1 text-gray-400 hover:text-red-500 transition-colors;
+        }
       }
     }
   }
