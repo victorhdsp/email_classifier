@@ -1,6 +1,6 @@
 import React from 'react';
 import { Loader2, Mail } from 'lucide-react';
-import styles from './SubmitButton.module.css';
+import styles from './SubmitButton.module.scss';
 
 interface SubmitButtonProps {
   canSubmit: boolean;

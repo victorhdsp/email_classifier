@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import EmailForm from './components/form/EmailForm';
-import EmailSidebar from './components/sidebar/EmailSidebar';
+import EmailForm from './components/form';
+import EmailSidebar from './components/sidebar';
 import { EmailResult } from './types';
-import styles from './App.module.css';
+import styles from './App.module.scss';
 import { useToast } from './components/shared/Toast/context';
 
 function App() {
@@ -23,22 +23,20 @@ function App() {
 
   return (
     <div className={styles.appContainer}>
-      <EmailSidebar
-        sidebarOpen={sidebarOpen}
-        setSidebarOpen={setSidebarOpen}
-        results={results}
-      />
-
       {/* Main Content Container */}
-      <div className={`${styles.mainContentContainer} ${
-        sidebarOpen ? styles.mainContentContainerSidebarOpen : ''
-      }`}>
+      <div data-sidebar-open={sidebarOpen} className={styles.mainContentContainer}>
         <div className={styles.maxWidthContainer}>
           <EmailForm
             onEmailClassified={handleEmailClassified}
           />
         </div>
       </div>
+
+      <EmailSidebar
+        sidebarOpen={sidebarOpen}
+        setSidebarOpen={setSidebarOpen}
+        results={results}
+      />
     </div>
   );
 }

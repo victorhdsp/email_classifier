@@ -1,6 +1,6 @@
 import React from 'react';
 import { ChevronRight, ChevronLeft } from 'lucide-react';
-import styles from './SidebarAttributes.module.css';
+import styles from './SidebarAttributes.module.scss';
 
 interface SidebarToggleButtonProps {
   sidebarOpen: boolean;
@@ -12,9 +12,8 @@ function SidebarToggleButton({ sidebarOpen, setSidebarOpen, hasResults }: Sideba
   return (
     <button
       onClick={() => setSidebarOpen(!sidebarOpen)}
-      className={`${styles.sidebarToggleButton} ${
-        sidebarOpen ? styles.sidebarToggleButtonOpen : styles.sidebarToggleButtonClosed
-      }`}
+      className={styles.sidebarToggleButton}
+      data-open={sidebarOpen}
       aria-label="toggle sidebar"
     >
       {sidebarOpen ? (

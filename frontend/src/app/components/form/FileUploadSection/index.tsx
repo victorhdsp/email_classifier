@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { UploadedFile } from '../../../types';
-import styles from './FileUploadSection.module.css';
+import styles from './FileUploadSection.module.scss';
 import UploadButtonInitialState from './UploadButtonInitialState';
 import UploadButtonUploadingState from './UploadButtonUploadingState';
 import UploadButtonUploadedState from './UploadButtonUploadedState';
@@ -41,7 +41,7 @@ function FileUploadSection({ uploadedFile, setUploadedFile, isUploading }: FileU
   return (
     <div className={styles.fileUploadSectionContainer}>
       <div>
-        <div className={`${styles.fileInputContainer} ${uploadedFile ? styles.fileInputContainerUploaded : ''}`}>
+        <div data-uploaded={!!uploadedFile} className={styles.fileInputContainer}>
           <input
             ref={fileInputRef}
             type="file"

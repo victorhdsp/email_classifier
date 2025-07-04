@@ -1,0 +1,26 @@
+.formContainer {
+  @apply bg-white rounded-2xl shadow-xl p-8 border border-gray-100;
+  @apply max-w-lg w-[32rem] mx-auto;
+
+  .modeToggleContainer {
+    @apply flex items-center justify-center mb-8;
+    
+    .tabsList {
+      @apply bg-gray-100 rounded-full p-1 flex;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .formContainer {
+    @apply w-full;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .formContainer {
+    @apply rounded-xl shadow-sm;
+    @apply m-auto h-[85vh] max-h-[550px];
+    @apply flex flex-col justify-center;
+  }
+}

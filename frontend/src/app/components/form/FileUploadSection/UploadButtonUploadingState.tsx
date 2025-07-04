@@ -1,5 +1,5 @@
 import { Loader2 } from 'lucide-react';
-import styles from './FileUploadSection.module.css';
+import styles from './FileUploadSection.module.scss';
 
 interface UploadButtonUploadingStateProps {
   onClick: () => void;
@@ -11,7 +11,8 @@ function UploadButtonUploadingState({ onClick }: UploadButtonUploadingStateProps
       type="button"
       onClick={onClick}
       disabled={true}
-      className={`${styles.fileUploadButton} ${styles.fileUploadButtonUploading}`}
+      data-state="uploading"
+      className={styles.fileUploadButton}
     >
       <div className={styles.uploadingState}>
         <Loader2 className={styles.uploadingSpinner} />

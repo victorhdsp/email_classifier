@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { ToastProvider } from './app/components/shared/Toast/provider';
 
 import App from './app/index';
-import './index.css';
+import './index.scss';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

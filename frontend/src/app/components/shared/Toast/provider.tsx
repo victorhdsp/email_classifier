@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 import * as RadixToast from '@radix-ui/react-toast';
 import { ToastContext, ToastData } from './context';
 import { ToastItem } from './item';
-import styles from './item.module.css';
+import styles from './item.module.scss';
 
 export interface ToastMessage extends ToastData {
   id: string;

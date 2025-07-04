@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './SidebarAttributes.module.css';
+import styles from './SidebarAttributes.module.scss';
 
 interface SidebarHeaderProps {
   resultsCount: number;

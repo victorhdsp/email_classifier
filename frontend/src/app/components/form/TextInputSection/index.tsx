@@ -1,4 +1,4 @@
-import styles from './TextInputSection.module.css';
+import styles from './TextInputSection.module.scss';
 
 interface TextInputSectionProps {
   textInput: string;

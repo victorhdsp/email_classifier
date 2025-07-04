@@ -1,12 +1,12 @@
 import React from 'react';
 import { Upload, FileText } from 'lucide-react';
 import * as Tabs from '@radix-ui/react-tabs';
-import FileUploadSection from '../FileUploadSection';
-import TextInputSection from '../TextInputSection';
-import SubmitButton from '../SubmitButton';
-import styles from './EmailForm.module.css';
-import { EmailResult } from '../../../types';
-import FilePreview from '../../shared/GenericLoadingMessage';
+import FileUploadSection from './FileUploadSection';
+import TextInputSection from './TextInputSection';
+import SubmitButton from './SubmitButton';
+import styles from './EmailForm.module.scss';
+import { EmailResult } from '../../types';
+import FilePreview from '../shared/GenericLoadingMessage';
 import { useSendEmailForm } from './useSendEmailForm';
 import { ButtonToggle } from './ButtonToggle';
 
@@ -74,7 +74,7 @@ function EmailForm({ onEmailClassified }: EmailFormProps) {
         </Tabs.Content>
       </Tabs.Root>
 
-      {uploadedFile && (
+      {uploadedFile && uploadMode === 'file' && (
         <FilePreview
           title={uploadedFile.name}
           subtitle={`Tamanho: ${uploadedFile.size}`}

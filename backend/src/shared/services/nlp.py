@@ -13,6 +13,9 @@ class Token:
 class NLPInterfaceAdapter(Protocol):
     def extract_token(self, text: str) -> list[Token]: ...
     def to_lowercase(self, text: str) -> str: ...
+    def remove_invalid_chars(self, text: str) -> str: ...
+    def remove_accents_and_special_chars(self, text: str) -> str: ...
+    def extract_and_strip_headers(text: str) -> tuple[str, str]: ...
 
 
 class NLPService:
@@ -20,7 +23,10 @@ class NLPService:
         self.nlp_adapter = nlp_adapter
 
     def pipeline(self, text: str) -> str:
+        headers, text = self.nlp_adapter.extract_and_strip_headers(text)
         text = self.nlp_adapter.to_lowercase(text)
+        text = self.nlp_adapter.remove_invalid_chars(text)
+        text = self.nlp_adapter.remove_accents_and_special_chars(text)
         tokens = self.nlp_adapter.extract_token(text)
 
         filtered_tokens = [

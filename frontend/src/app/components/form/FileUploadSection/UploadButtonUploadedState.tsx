@@ -1,6 +1,6 @@
 import React from 'react';
 import { FileText } from 'lucide-react';
-import styles from './FileUploadSection.module.css';
+import styles from './FileUploadSection.module.scss';
 
 interface UploadButtonUploadedStateProps {
   onClick: () => void;
@@ -11,7 +11,8 @@ function UploadButtonUploadedState({ onClick }: UploadButtonUploadedStateProps) 
     <button
       type="button"
       onClick={onClick}
-      className={`${styles.fileUploadButton} ${styles.fileUploadButtonUploaded}`}
+      data-state="uploaded"
+      className={styles.fileUploadButton}
     >
       <div className={styles.uploadedState}>
         <div className={styles.uploadedIconContainer}>

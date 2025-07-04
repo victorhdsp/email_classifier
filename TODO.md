@@ -24,9 +24,9 @@
 ### Normalize
 
 * [x] Implementar tratamento básico de texto (espaços, quebras de linha, minúsculas).
-* [ ] Remover caracteres inválidos (UTF-8).
-* [ ] Remover acentos e caracteres especiais.
-* [ ] Remover cabeçalhos desnecessários (definir o que será removido).
+* [x] Remover caracteres inválidos (UTF-8).
+* [x] Remover acentos e caracteres especiais.
+* [x] Remover cabeçalhos desnecessários (definir o que será removido).
 * [x] Implementar pré-processamento NLP básico (stop words, lematização) — usar SpaCy ou NLTK.
 * [x] Extrair timestamp se presente no texto.
 
@@ -41,7 +41,7 @@
 
 * [x] Criar endpoint API REST para receber dados do frontend (arquivo/texto).
 * [x] Implementar tratamento de erros e respostas padronizadas.
-* [ ] Criar testes unitários básicos para cada etapa (protect, extract, normalize, analyze).
+* [x] Criar testes unitários básicos para cada etapa (protect, extract, normalize, analyze).
 * [x] Criar um fallback para a API da LLM.
 
 ---
@@ -55,10 +55,10 @@
 * [x] Criar textarea para entrada manual de texto.
 * [x] Criar sidebar scrollável com accordion para mostrar `subject`, `type`, `text` e `timestamp`.
 * [x] Implementar abertura/fechamento da sidebar e comportamento responsivo (sidebar lateral ou embaixo conforme largura).
-* [ ] Tratar responsividade geral da página.
-* [ ] Tornar formulário com tamanho fixo em ambas as direções.
-* [ ] Permitir sobreposição parcial do aside.
-* [ ] Em dispositivos pequenos remover o aside e adicionar o conteúdo abaixo do formulário.
+* [x] Tratar responsividade geral da página.
+* [x] Tornar formulário com tamanho fixo em ambas as direções.
+* [x] Permitir sobreposição parcial do aside.
+* [x] Em dispositivos pequenos remover o aside e adicionar o conteúdo abaixo do formulário.
 
 ---
 
@@ -75,7 +75,7 @@
 * [x] Preparar scripts para deploy backend (ex: Dockerfile, requirements.txt).
 * [x] Deploy backend em plataforma gratuita (Heroku, Render, etc.).
 * [x] Preparar deploy frontend (Vercel, Netlify, etc.).
-* [ ] Escrever README final com instruções claras para rodar local e deploy.
+* [x] Escrever README final com instruções claras para rodar local e deploy.
 * [ ] Preparar documentação mínima da API (endpoint, parâmetros, resposta).
 * [ ] Criar vídeo demonstrativo (3-5 minutos) explicando a solução.
 
@@ -92,20 +92,25 @@
 * [x] fix(backend): Dar exemplos de coisas produtivas e improdutivas para o prompt. 
 * [x] fix(backend): Diminuir a criatividade da LLM.
 * [x] fix(frontend): Mudar textos relacionados a data e ocultar quando não tiver.
-* [ ] fix(frontend): Selecionar um arquivo e ir para o campo de texto deve ocultar a caixa de aviso.
+* [x] fix(frontend): Selecionar um arquivo e ir para o campo de texto deve ocultar a caixa de aviso.
 
 ---
 
 ## 6. Extras (Após MVP)
 
-* [ ] featere(backend): Implementar envio em lote (upload múltiplo).
-* [ ] featere(frontend): Criar onboarding simples no frontend explicando a funcionalidade.
-* [ ] featere(frontend): Leitura e análise de TXT pequenos no frontend (<1MB).
-* [ ] featere(frontend): Explorar integração com serviços de email (Gmail API, IMAP).
-* [ ] featere(backend): Cache semântico para evitar chamadas repetidas à IA.
-* [ ] featere(frontend): Adicionar persistência para os elementos já classificados.
-    - permitir remoção dos já adicionados.
-    - permitir busca dos elementos já adicionados.
-    - permitir filtragem dos elementos já adicionados.
-* [ ] feature(frontend): Adicionar transições suaves para as mudanças no frontend.
-* [ ] treinar um modelo discriminativo para fazer a classificação.
+* [x] featere(frontend): Leitura e análise de TXT pequenos no frontend (<1MB). ***!
+* [ ] featere(frontend): Criar onboarding simples no frontend explicando a funcionalidade. **!
+
+* [ ] featere(backend): Cache semântico para evitar chamadas repetidas à IA. ***!!
+    [ ] adicionar banco de dados
+* [ ] featere(frontend): Adicionar persistência para os elementos já classificados. ***!!
+    [ ] adicionar remoção dos já adicionados.
+    [ ] adicionar busca dos elementos já adicionados.
+    [ ] adicionar filtragem dos elementos já adicionados.
+* [ ] feature(frontend): Adicionar transições suaves para as mudanças no frontend. **!!
+* [ ] featere(backend): Implementar envio em lote (upload múltiplo). *!!
+
+* [ ] treinar um modelo discriminativo para fazer a classificação. ***!!!
+    - precisa de muitos e-mails já classificados.
+* [ ] featere(frontend): Explorar integração com serviços de email (Gmail API, IMAP). *!!!
+    [ ] adicionar sistema de autenticação

@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { EmailResult, UploadedFile } from "../../../types";
+import { EmailResult, UploadedFile } from "../../types";
 import axios, { AxiosError } from 'axios';
-import { useToast } from "../../shared/Toast/context";
+import { useToast } from "../shared/Toast/context";
 
 axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL;
 
