@@ -2,15 +2,16 @@ import styles from './ButtonToggle.module.scss';
 import { Tabs } from "radix-ui";
 import React from 'react';
 
-interface ButtonToggleProps {
+interface ButtonToggleProps extends React.HTMLAttributes<HTMLButtonElement> {
   value: 'file' | 'text';
   text: string;
   Icon: React.ElementType;
 }
 
-export function ButtonToggle({value, text, Icon}: ButtonToggleProps) {
+export function ButtonToggle({value, text, Icon, ...rest}: ButtonToggleProps) {
   return (
     <Tabs.Trigger
+      {...rest}
       value={value}
       className={`${styles.tabTrigger}`}
     >

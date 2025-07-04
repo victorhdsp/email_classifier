@@ -14,6 +14,7 @@ function TextInputSection({ textInput, setTextInput }: TextInputSectionProps) {
         placeholder="Cole o conteúdo do email aqui..."
         rows={6}
         className={`${styles.textArea} h-[274px]`}
+        data-tour="text-input"
       />
     </div>
   );

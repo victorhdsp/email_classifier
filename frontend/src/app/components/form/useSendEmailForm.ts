@@ -2,6 +2,7 @@ import { useState } from "react";
 import { EmailResult, UploadedFile } from "../../types";
 import axios, { AxiosError } from 'axios';
 import { useToast } from "../shared/Toast/context";
+import { useUploadMode } from "./useUploadMode";
 
 axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL;
 
@@ -42,16 +43,15 @@ async function analyzeFile(file: File, onUploadProgress: (progress: number) => v
 }
 
 export function useSendEmailForm() {
+    const { setUploadMode, uploadMode} = useUploadMode()
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [uploadedFile, setUploadedFile] = useState<UploadedFile | null>(null);
-    const [uploadMode, setUploadMode] = useState<'file' | 'text'>('file');
     const [textInput, setTextInput] = useState('');
     const toast = useToast();
 
     const handleFileSubmit = async (file: File): Promise<EmailResult> => {
         validateFile(file);
 
-        // Smart upload: send small text files as text for efficiency
         if (file.type === 'text/plain' && file.size < 1024 * 1024) {
             const text = await file.text();
             return analyzeText(text);

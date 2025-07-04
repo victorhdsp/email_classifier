@@ -41,7 +41,11 @@ function FileUploadSection({ uploadedFile, setUploadedFile, isUploading }: FileU
   return (
     <div className={styles.fileUploadSectionContainer}>
       <div>
-        <div data-uploaded={!!uploadedFile} className={styles.fileInputContainer}>
+        <div
+          data-uploaded={!!uploadedFile}
+          className={styles.fileInputContainer}
+          data-tour="file-input"
+        >
           <input
             ref={fileInputRef}
             type="file"
