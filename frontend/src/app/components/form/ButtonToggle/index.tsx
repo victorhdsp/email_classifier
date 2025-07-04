@@ -1,4 +1,4 @@
-import styles from './EmailForm.module.scss';
+import styles from './ButtonToggle.module.scss';
 import { Tabs } from "radix-ui";
 import React from 'react';
 

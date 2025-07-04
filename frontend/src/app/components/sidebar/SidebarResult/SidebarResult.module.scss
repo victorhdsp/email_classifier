@@ -50,11 +50,11 @@
   @apply inline-flex items-center px-2 py-1 rounded-full text-xs font-medium;
 }
 
-.resultTypeProductive {
+.resultType[data-type="Produtivo"] {
   @apply bg-green-100 text-green-800;
 }
 
-.resultTypeImproductive {
+.resultType[data-type="Improdutivo"] {
   @apply bg-yellow-100 text-yellow-800;
 }
 
@@ -74,7 +74,7 @@
   @apply w-4 h-4 text-gray-400 transition-transform;
 }
 
-.resultChevronExpanded {
+.resultChevron[data-expanded="true"] {
   @apply rotate-90;
 }
 

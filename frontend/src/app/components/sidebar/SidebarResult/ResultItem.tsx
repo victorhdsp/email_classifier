@@ -21,11 +21,7 @@ function ResultItem({ result, isExpanded, onToggleExpand }: ResultItemProps) {
           <div className={styles.resultSubjectContainer}>
             <p className={styles.resultSubject}>{result.subject}</p>
             <div className={styles.resultTypeContainer}>
-              <span className={`${styles.resultType} ${
-                result.type === 'Produtivo' 
-                  ? styles.resultTypeProductive 
-                  : styles.resultTypeImproductive
-              }`}>
+              <span data-type={result.type} className={styles.resultType}>
                 <Tag className={styles.resultTypeIcon} />
                 {result.type}
               </span>
@@ -33,9 +29,7 @@ function ResultItem({ result, isExpanded, onToggleExpand }: ResultItemProps) {
           </div>
           <div className={styles.resultActions}>
             <Clock className={styles.resultActionIcon} />
-            <ChevronRight className={`${styles.resultChevron} ${
-              isExpanded ? styles.resultChevronExpanded : ''
-            }`} />
+            <ChevronRight data-expanded={isExpanded} className={styles.resultChevron} />
           </div>
         </div>
       </button>

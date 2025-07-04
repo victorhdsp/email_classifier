@@ -12,9 +12,8 @@ function SidebarToggleButton({ sidebarOpen, setSidebarOpen, hasResults }: Sideba
   return (
     <button
       onClick={() => setSidebarOpen(!sidebarOpen)}
-      className={`${styles.sidebarToggleButton} ${
-        sidebarOpen ? styles.sidebarToggleButtonOpen : styles.sidebarToggleButtonClosed
-      }`}
+      className={styles.sidebarToggleButton}
+      data-open={sidebarOpen}
       aria-label="toggle sidebar"
     >
       {sidebarOpen ? (

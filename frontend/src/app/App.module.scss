@@ -6,7 +6,7 @@
   @apply min-h-screen flex items-center justify-center p-4 transition-all duration-300;
 }
 
-.mainContentContainerSidebarOpen {
+.mainContentContainer[data-sidebar-open="true"] {
   @apply pr-96;
 }
 

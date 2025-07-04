@@ -23,9 +23,7 @@ function EmailSidebar({ sidebarOpen, setSidebarOpen, results }: EmailSidebarProp
         hasResults={results.length > 0}
       />
 
-      <div className={`${styles.sidebarContainer} ${
-        sidebarOpen ? styles.sidebarContainerOpen : styles.sidebarContainerClosed
-      }`}>
+      <div data-open={sidebarOpen} className={styles.sidebarContainer}>
         <div className={styles.sidebarContent}>
           <SidebarHeader resultsCount={results.length} />
 

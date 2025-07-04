@@ -6,7 +6,7 @@
   @apply relative transition-all duration-300;
 }
 
-.fileInputContainerUploaded {
+.fileInputContainer[data-uploaded="true"] {
   @apply mb-4;
 }
 

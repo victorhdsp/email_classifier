@@ -2,11 +2,11 @@
   @apply fixed top-1/2 -translate-y-1/2 z-50 bg-white shadow-lg border border-gray-200 rounded-l-xl p-3 transition-all duration-300 hover:bg-gray-50;
 }
 
-.sidebarToggleButtonOpen {
+.sidebarToggleButton[data-open="true"] {
   @apply right-96;
 }
 
-.sidebarToggleButtonClosed {
+.sidebarToggleButton[data-open="false"] {
   @apply right-0;
 }
 

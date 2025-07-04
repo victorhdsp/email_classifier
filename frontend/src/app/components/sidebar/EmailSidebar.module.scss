@@ -2,11 +2,11 @@
   @apply fixed inset-y-0 right-0 w-96 bg-white shadow-2xl transform transition-transform duration-300 z-40;
 }
 
-.sidebarContainerOpen {
+.sidebarContainer[data-open="true"] {
   @apply translate-x-0;
 }
 
-.sidebarContainerClosed {
+.sidebarContainer[data-open="false"] {
   @apply translate-x-full;
 }
 

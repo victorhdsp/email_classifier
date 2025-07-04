@@ -30,9 +30,7 @@ function App() {
       />
 
       {/* Main Content Container */}
-      <div className={`${styles.mainContentContainer} ${
-        sidebarOpen ? styles.mainContentContainerSidebarOpen : ''
-      }`}>
+      <div data-sidebar-open={sidebarOpen} className={styles.mainContentContainer}>
         <div className={styles.maxWidthContainer}>
           <EmailForm
             onEmailClassified={handleEmailClassified}

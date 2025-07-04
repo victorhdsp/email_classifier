@@ -9,13 +9,3 @@
 .tabsList {
   @apply bg-gray-100 rounded-full p-1 flex;
 }
-
-.tabTrigger {
-  @apply flex items-center space-x-2 px-4 py-2 rounded-full text-sm font-medium transition-all;
-}
-.tabTrigger[data-state='active'] {
-  @apply bg-blue-600 text-white shadow-md;
-}
-.tabTrigger[data-state='inactive'] {
-  @apply text-gray-600 hover:text-gray-900;
-}

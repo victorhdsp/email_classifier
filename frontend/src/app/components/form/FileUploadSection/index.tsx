@@ -41,7 +41,7 @@ function FileUploadSection({ uploadedFile, setUploadedFile, isUploading }: FileU
   return (
     <div className={styles.fileUploadSectionContainer}>
       <div>
-        <div className={`${styles.fileInputContainer} ${uploadedFile ? styles.fileInputContainerUploaded : ''}`}>
+        <div data-uploaded={!!uploadedFile} className={styles.fileInputContainer}>
           <input
             ref={fileInputRef}
             type="file"
