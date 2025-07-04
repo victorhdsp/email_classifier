@@ -11,7 +11,8 @@ function UploadButtonUploadingState({ onClick }: UploadButtonUploadingStateProps
       type="button"
       onClick={onClick}
       disabled={true}
-      className={`${styles.fileUploadButton} ${styles.fileUploadButtonUploading}`}
+      data-state="uploading"
+      className={styles.fileUploadButton}
     >
       <div className={styles.uploadingState}>
         <Loader2 className={styles.uploadingSpinner} />

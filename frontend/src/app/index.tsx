@@ -23,12 +23,6 @@ function App() {
 
   return (
     <div className={styles.appContainer}>
-      <EmailSidebar
-        sidebarOpen={sidebarOpen}
-        setSidebarOpen={setSidebarOpen}
-        results={results}
-      />
-
       {/* Main Content Container */}
       <div data-sidebar-open={sidebarOpen} className={styles.mainContentContainer}>
         <div className={styles.maxWidthContainer}>
@@ -37,6 +31,12 @@ function App() {
           />
         </div>
       </div>
+
+      <EmailSidebar
+        sidebarOpen={sidebarOpen}
+        setSidebarOpen={setSidebarOpen}
+        results={results}
+      />
     </div>
   );
 }

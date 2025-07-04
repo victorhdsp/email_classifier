@@ -74,7 +74,7 @@ function EmailForm({ onEmailClassified }: EmailFormProps) {
         </Tabs.Content>
       </Tabs.Root>
 
-      {uploadedFile && (
+      {uploadedFile && uploadMode === 'file' && (
         <FilePreview
           title={uploadedFile.name}
           subtitle={`Tamanho: ${uploadedFile.size}`}

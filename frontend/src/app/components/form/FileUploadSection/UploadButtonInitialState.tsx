@@ -10,7 +10,8 @@ function UploadButtonInitialState({ onClick }: UploadButtonInitialStateProps) {
     <button
       type="button"
       onClick={onClick}
-      className={`${styles.fileUploadButton} h-[274px] border-gray-300`}
+      data-state="initial"
+      className={styles.fileUploadButton}
     >
       <div className={styles.initialState}>
         <div className={styles.initialIconContainer}>

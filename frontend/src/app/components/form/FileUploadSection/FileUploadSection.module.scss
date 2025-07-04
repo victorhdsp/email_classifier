@@ -1,123 +1,80 @@
 .fileUploadSectionContainer {
   @apply space-y-6;
-}
 
-.fileInputContainer {
-  @apply relative transition-all duration-300;
-}
+  .fileInputContainer {
+    @apply relative transition-all duration-300;
+  
+    &[data-uploaded="true"] {
+      @apply mb-4;
+    }
+  }
 
-.fileInputContainer[data-uploaded="true"] {
-  @apply mb-4;
 }
 
 .fileUploadButton {
   @apply w-full border-2 border-dashed rounded-xl p-8 text-center transition-all hover:border-blue-400 hover:bg-blue-50;
-}
 
-.fileUploadButtonUploading {
-  @apply border-blue-400 bg-blue-50;
-}
+  &[data-state="initial"] {
+    @apply border-gray-300 bg-gray-50 h-[274px];
 
-.fileUploadButtonUploaded {
-  @apply border-green-400 bg-green-50;
-}
+    .initialState {
+      @apply flex flex-col items-center space-y-3;
+    }
 
-.uploadingState {
-  @apply flex flex-col items-center space-y-3;
-}
+    .initialIconContainer {
+      @apply w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center;
+    }
 
-.uploadingSpinner {
-  @apply w-8 h-8 text-blue-600 animate-spin;
-}
+    .initialIcon {
+      @apply w-6 h-6 text-gray-600;
+    }
 
-.uploadingText {
-  @apply text-blue-600 font-medium;
-}
+    .initialText {
+      @apply text-gray-600 font-medium;
+    }
 
-.uploadedState {
-  @apply flex flex-col items-center space-y-3;
-}
+    .initialSubText {
+      @apply text-sm text-gray-400;
+    }
+  }
 
-.uploadedIconContainer {
-  @apply w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center;
-}
+  &[data-state="uploading"] {
+    @apply border-blue-400 bg-blue-50;
 
-.uploadedIcon {
-  @apply w-6 h-6 text-green-600;
-}
+    .uploadingState {
+      @apply flex flex-col items-center space-y-3;
+    }
 
-.uploadedText {
-  @apply text-green-600 font-medium;
-}
+    .uploadingSpinner {
+      @apply w-8 h-8 text-blue-600 animate-spin;
+    }
 
-.uploadedSubText {
-  @apply text-sm text-gray-500;
-}
+    .uploadingText {
+      @apply text-blue-600 font-medium;
+    }
+  }
 
-.initialState {
-  @apply flex flex-col items-center space-y-3;
-}
+  &[data-state="uploaded"] {
+    @apply border-green-400 bg-green-50;
 
-.initialIconContainer {
-  @apply w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center;
-}
+    .uploadedState {
+      @apply flex flex-col items-center space-y-3;
+    }
 
-.initialIcon {
-  @apply w-6 h-6 text-gray-600;
-}
+    .uploadedIconContainer {
+      @apply w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center;
+    }
 
-.initialText {
-  @apply text-gray-600 font-medium;
-}
+    .uploadedIcon {
+      @apply w-6 h-6 text-green-600;
+    }
 
-.initialSubText {
-  @apply text-sm text-gray-400;
-}
+    .uploadedText {
+      @apply text-green-600 font-medium;
+    }
 
-.filePreviewContainer {
-  @apply bg-gray-50 rounded-lg p-4 border border-gray-200;
-}
-
-.filePreviewHeader {
-  @apply flex items-center justify-between;
-}
-
-.filePreviewInfo {
-  @apply flex items-center space-x-3;
-}
-
-.filePreviewIconContainer {
-  @apply w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center;
-}
-
-.filePreviewIcon {
-  @apply w-5 h-5 text-blue-600;
-}
-
-.filePreviewName {
-  @apply font-medium text-gray-900 text-sm;
-}
-
-.filePreviewSize {
-  @apply text-xs text-gray-500;
-}
-
-.removeFileButton {
-  @apply p-1 text-gray-400 hover:text-red-500 transition-colors;
-}
-
-.progressBarContainer {
-  @apply mt-3;
-}
-
-.progressBarText {
-  @apply flex justify-between text-xs text-gray-600 mb-1;
-}
-
-.progressBarBackground {
-  @apply w-full bg-gray-200 rounded-full h-1.5;
-}
-
-.progressBarFill {
-  @apply bg-blue-600 h-1.5 rounded-full transition-all duration-300;
+    .uploadedSubText {
+      @apply text-sm text-gray-500;
+    }
+  }
 }

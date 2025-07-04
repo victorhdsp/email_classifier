@@ -11,7 +11,8 @@ function UploadButtonUploadedState({ onClick }: UploadButtonUploadedStateProps) 
     <button
       type="button"
       onClick={onClick}
-      className={`${styles.fileUploadButton} ${styles.fileUploadButtonUploaded}`}
+      data-state="uploaded"
+      className={styles.fileUploadButton}
     >
       <div className={styles.uploadedState}>
         <div className={styles.uploadedIconContainer}>
