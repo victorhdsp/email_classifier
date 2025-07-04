@@ -1,4 +1,3 @@
-import hashlib
 import json
 import re
 
@@ -9,6 +8,7 @@ from src.email_analysis.shared.models.analysis_result import AnalysisResult
 from src.email_analysis.shared.prompts.analyze_raw_text import analyze_raw_text_prompt
 from src.shared.services.llm import LLMService
 from src.shared.services.nlp import NLPService
+from src.shared.services.semantic_cache_service import SemanticCacheService
 
 DATE_PATTERNS = [
     r"\d{1,2} de \w+ de \d{4} às \d{1,2}:\d{2}",  # 2 de julho de 2025 às 17:03
@@ -18,9 +18,15 @@ DATE_PATTERNS = [
 
 
 class AnalyzeRawTextUseCase:
-    def __init__(self, nlp_service: NLPService, llm_service: LLMService):
+    def __init__(
+        self,
+        nlp_service: NLPService,
+        llm_service: LLMService,
+        semantic_cache_service: SemanticCacheService,
+    ):
         self.nlp = nlp_service
         self.llm = llm_service
+        self.semantic_cache = semantic_cache_service
         pass
 
     def protect(self, text: str) -> None:
@@ -48,29 +54,40 @@ class AnalyzeRawTextUseCase:
         cleaned_text = self.nlp.pipeline(raw_text)
         prompt = analyze_raw_text_prompt(cleaned_text)
 
-        for attempt in range(2):
-            response = self.llm.generate(prompt)
+        def llm_callable(p: str) -> dict:
+            for attempt in range(2):
+                response = self.llm.generate(p)
+                match = re.search(
+                    r"```(?:json)?\s*(\{.*?\})\s*```", response, re.DOTALL
+                )
 
-            match = re.search(r"```(?:json)?\s*(\{.*?\})\s*```", response, re.DOTALL)
-            try:
-                if match:
-                    response_json_str = match.group(1)
-                else:
-                    response_json_str = response
+                try:
+                    if match:
+                        response_json_str = match.group(1)
+                    else:
+                        response_json_str = response
 
-                response_data = json.loads(response_json_str)
-                response_data["id"] = hashlib.sha256(cleaned_text.encode()).hexdigest()
+                    print(f"[LLM] Resposta do LLM: {response_json_str}")
+                    response_data = json.loads(response_json_str)
+                    return response_data
 
-                if not response_data.get("timestamp"):
-                    timestamp = self.extract_first_valid_date(raw_text)
-                if timestamp:
-                    response_data["timestamp"] = timestamp
+                except (json.JSONDecodeError, TypeError, ValueError):
+                    if attempt == 1:
+                        raise Exception(
+                            "Falha ao parsear resposta do LLM após duas tentativas.",
+                        )
+            raise Exception("Falha ao gerar resposta do LLM.")
 
-                return AnalysisResult(**response_data)
-            except (json.JSONDecodeError, TypeError, ValueError):
-                if attempt == 1:
-                    raise Exception(
-                        "Falha ao parsear resposta do LLM após duas tentativas.",
-                    )
+        response_data = self.semantic_cache.get_or_generate(
+            input_text= cleaned_text,
+            prompt= prompt,
+            llm_callable= llm_callable
+        )
 
-        raise Exception("Falha ao gerar resposta do LLM.")
+        if not response_data.get("timestamp"):
+            timestamp = self.extract_first_valid_date(raw_text)
+            if timestamp:
+                response_data["timestamp"] = timestamp
+
+        return AnalysisResult(**response_data)
+

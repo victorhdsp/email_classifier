@@ -101,8 +101,8 @@
 * [x] featere(frontend): Leitura e análise de TXT pequenos no frontend (<1MB). ***!
 * [x] featere(frontend): Criar onboarding simples no frontend explicando a funcionalidade. **!
 
-* [ ] featere(backend): Cache semântico para evitar chamadas repetidas à IA. ***!!
-    [ ] adicionar banco de dados
+* [x] featere(backend): Cache semântico para evitar chamadas repetidas à IA. ***!!
+    [x] adicionar banco de dados
 * [ ] featere(frontend): Adicionar persistência para os elementos já classificados. ***!!
     [ ] adicionar remoção dos já adicionados.
     [ ] adicionar busca dos elementos já adicionados.
