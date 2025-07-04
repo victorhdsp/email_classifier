@@ -14,6 +14,7 @@ function SubmitButton({ canSubmit, isProcessing }: SubmitButtonProps) {
         type="submit"
         disabled={!canSubmit || isProcessing}
         className={styles.submitButton}
+        data-tour="submit-button"
       >
         {isProcessing ? (
           <>

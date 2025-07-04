@@ -21,9 +21,14 @@ function EmailSidebar({ sidebarOpen, setSidebarOpen, results }: EmailSidebarProp
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}
         hasResults={results.length > 0}
+        data-tour="sidebar-toggle-button"
       />
 
-      <div data-open={sidebarOpen} className={styles.sidebarContainer}>
+      <div
+        data-open={sidebarOpen}
+        className={styles.sidebarContainer}
+        data-tour="sidebar-results"
+      >
         <div className={styles.sidebarContent}>
           <SidebarHeader resultsCount={results.length} />
 

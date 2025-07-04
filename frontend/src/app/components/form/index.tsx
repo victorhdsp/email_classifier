@@ -37,7 +37,7 @@ function EmailForm({ onEmailClassified }: EmailFormProps) {
   const canSubmit = (uploadMode === 'file' ? !!uploadedFile : textInput.trim().length > 0) && !isSubmitting;
 
   return (
-    <form onSubmit={handleFormSubmit} className={styles.formContainer}>
+    <form onSubmit={handleFormSubmit} className={styles.formContainer} data-tour="email-form">
       <Tabs.Root
         className="flex flex-col"
         value={uploadMode}
@@ -49,11 +49,13 @@ function EmailForm({ onEmailClassified }: EmailFormProps) {
               value='file'
               text='Arquivo'
               Icon={Upload}
+              data-tour="file-upload-toggle"
             />
             <ButtonToggle
               value='text'
               text='Texto'
               Icon={FileText}
+              data-tour="text-input-toggle"
             />
           </Tabs.List>
         </div>
