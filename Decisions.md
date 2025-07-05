@@ -27,6 +27,7 @@ Para o llm decidi utilizar o `google gemini`, mais específicamente o "gemini-1.
 
 Coloquei como um fallback para o caso do Gemini falhar, seja pelo excesso do limite gratuito, por estar fora do ar ou por algum erro, nesse caso estou usando o `hugging faces`, com o modelo `mistral-7b`, a versão gratuita do hugging faces tem o problema de ser meio lenta, por isso estou usando como fallback e não como principal, relação a custos o hugging faces cobra por hardware e não por token.
 
+Cache, é relativamente comum que várias pessoas recebam o mesmo e-mail dentro de uma empresa, então penso que faz sentido que esso seja tradado somente uma vez, pensando baixo considerando que tenha ao longo do tempo eles enviem 10000 emails e 30% é compartilhado entre 2 funcionarios, então 1500 emails não passaram pelo processo da I.A. Apesar de normalmente se utilizar `redis` para cache por ser mais rápido, nesse caso escolhi utilizar o `postgres`, meu foco aqui não é a velocidade apesar do postgres tambem ser bem rápido, mas sim evitar custo e processamento, e-mails podem ser encaminhados ao longo do tempo e um banco `sql` me traz a vantagem de ter persistência.
 ---
 
 ## **2. Frontend**
@@ -60,6 +61,10 @@ A `sidebar` em telas maiores deve cobrir a lateral direita da tela quando estive
 ### Feedback
 
 Para o `formulário` vou utilizar uma barra de progresso que determina o quanto do arquivo já foi enviado para o servidor e após isso, vai se iniciar um segundo loading avisando que está analisando para que o usuário tenha alguma atualização sobre o que esta acontecendo.
+
+Foi adicionado um toast para avisar ao usuário sobre eventuais erros e ao adicionar novos resultados.
+
+Foi adicionado um botão na extremidade inferior direita que inicia um onboarding para o que o usuário tenha uma baixa curva de aprendizado, o onboarding tambem é executado na primeira vez que o usuário abre o programa (nesse caso por navegador).
 
 ---
 
@@ -123,6 +128,16 @@ Para lidar com a reutilização de código criar uma shared a nivel de funcional
 |---- /shared
 |------ /dto
 |-------- error.py
+```
+
+#### Cache
+
+Estou utilizando postgres para o banco de dados e os dados guardados vão ser `id`, `input` e `output`.
+
+```
+id      TEXT    PRIMARY KEY, # Representa um hash do valor de input
+input   TEXT    NOT     NULL, # Representa o conteúdo limpo, depois do nlp.
+output  JSONB   NOT     NULL # Representa o resultado gerado pela I.A.
 ```
 
 ---

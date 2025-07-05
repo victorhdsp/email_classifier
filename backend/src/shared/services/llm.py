@@ -1,14 +1,14 @@
 import time
-from abc import ABC
+from abc import ABC, abstractmethod
 
 
 class LLMAdapter(ABC):
     def __init__(self, model_name: str, api_key: str):
         pass
 
+    @abstractmethod
     def generate_text(self, prompt: str) -> str:
-        pass
-
+        ...
 
 class LLMService:
     def __init__(

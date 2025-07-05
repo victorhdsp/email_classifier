@@ -1,0 +1,71 @@
+.resultItem {
+  @apply p-4;
+
+  .resultButton {
+    @apply w-full text-left space-y-2;
+
+    .resultHeader {
+      @apply flex items-start justify-between;
+
+      .resultSubjectContainer {
+        @apply flex-1 min-w-0;
+
+        .resultSubject {
+          @apply font-medium text-gray-900 truncate text-sm;
+        }
+
+        .resultTypeContainer {
+          @apply flex items-center space-x-2 mt-1;
+
+          .resultType {
+            @apply inline-flex items-center px-2 py-1 rounded-full text-xs font-medium;
+
+            &[data-type="Produtivo"] {
+              @apply bg-green-100 text-green-800;
+            }
+
+            &[data-type="Improdutivo"] {
+              @apply bg-yellow-100 text-yellow-800;
+            }
+          }
+
+          .resultTypeIcon {
+            @apply w-3 h-3 mr-1;
+          }
+        }
+      }
+
+      .resultActions {
+        @apply flex items-center space-x-2 ml-2;
+
+        .resultActionIcon {
+          @apply w-4 h-4 text-gray-400;
+        }
+
+        .resultChevron {
+          @apply w-4 h-4 text-gray-400 transition-transform;
+
+          &[data-expanded="true"] {
+            @apply rotate-90;
+          }
+        }
+
+        .removeButton {
+          @apply p-1 text-gray-400 hover:text-red-500 transition-colors;
+        }
+      }
+    }
+  }
+
+  .expandedContent {
+    @apply mt-3 pl-2 border-l-2 border-blue-100 space-y-3;
+
+    .expandedContentTitle {
+      @apply text-xs font-medium text-gray-500 uppercase tracking-wide;
+    }
+
+    .expandedContentText {
+      @apply text-sm text-gray-700 mt-1;
+    }
+  }
+}
