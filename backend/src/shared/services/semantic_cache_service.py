@@ -26,6 +26,7 @@ class SemanticCacheService:
         else:
             print(f"[SemanticCache] Cache miss for ID: {cache_id}. Calling LLM...")
             llm_response = llm_callable(prompt)
+            llm_response["id"] = cache_id
             self.repository.insert(cache_id, input_text, llm_response)
             print(f"[SemanticCache] LLM response cached for ID: {cache_id}")
             return llm_response 
