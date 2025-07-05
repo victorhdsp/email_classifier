@@ -17,7 +17,7 @@ def mock_genai_client():
 
 @pytest.fixture
 def gemini_service_instance(mock_genai_client):
-    return GeminiService(model_name="models/gemini-1.5-flash", token="dummy_api_key")
+    return GeminiService(model_name="models/gemini-1.5-flash", api_key="dummy_api_key")
 
 
 def test_gemini_service_generate(gemini_service_instance):
