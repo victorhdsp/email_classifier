@@ -20,9 +20,6 @@ load_dotenv()
 DATABASE_URL = os.getenv("DATABASE_URL")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 HUGGING_API_KEY = os.getenv("HUGGING_API_KEY")
-VAPID_PRIVATE_KEY = os.getenv("VAPID_PRIVATE_KEY")
-VAPID_PUBLIC_KEY = os.getenv("VAPID_PUBLIC_KEY")
-VAPID_CLAIMS_SUB = os.getenv("VAPID_CLAIMS_SUB")
 
 if not DATABASE_URL:
     raise ValueError("DATABASE_URL is not set in the environment variables")
@@ -30,13 +27,7 @@ if not GEMINI_API_KEY:
     raise ValueError("GEMINI_API_KEY is not set in the environment variables")
 if not HUGGING_API_KEY:
     raise ValueError("HUGGING_API_KEY is not set in the environment variables") 
-if not VAPID_PRIVATE_KEY:
-    raise ValueError("VAPID_PRIVATE_KEY is not set in the environment variables")
-if not VAPID_PUBLIC_KEY:
-    raise ValueError("VAPID_PUBLIC_KEY is not set in the environment variables")
-if not VAPID_CLAIMS_SUB:
-    raise ValueError("VAPID_CLAIMS_SUB is not set in the environment variables")
-
+    
 # General
 hugging_llm = HuggingFaceService(token=HUGGING_API_KEY)
 gemini_llm = GeminiService(token=GEMINI_API_KEY)
