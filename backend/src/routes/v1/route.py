@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from src.api.v1.email_analysis.route import email_analysis_router
+from src.routes.v1.analyze.route import analyze_router
 
 v1_router = APIRouter(prefix="/v1")
 
@@ -10,4 +10,4 @@ async def health_check():
     return {"status": "ok"}
 
 
-v1_router.include_router(email_analysis_router)
+v1_router.include_router(analyze_router)

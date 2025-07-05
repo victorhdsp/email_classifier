@@ -1,6 +1,6 @@
 import uvicorn
 
-from src.app_builder import create_app
+from src.shared.builder.app_builder import create_app
 
 app = create_app()
 

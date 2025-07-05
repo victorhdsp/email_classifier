@@ -1,5 +1,5 @@
-from src.email_analysis.shared.models.analysis_result import AnalysisResult
-from src.email_analysis.shared.usecases.analize_raw_text import (
+from src.analyze.models.analyze_result import AnalyzeResult
+from src.analyze.usecases.analize_raw_text import (
     AnalyzeRawTextUseCase,
 )
 
@@ -9,6 +9,6 @@ class AnalyzeByTextController:
         self.analyze_raw_text = analyze_raw_text_use_case
         pass
 
-    async def execute(self, raw_text: str) -> AnalysisResult:
+    async def execute(self, raw_text: str) -> AnalyzeResult:
         response = await self.analyze_raw_text.execute(raw_text)
         return response

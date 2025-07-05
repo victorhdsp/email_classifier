@@ -1,8 +1,8 @@
 from fastapi import UploadFile
 
-from src.email_analysis.shared.models.analysis_result import AnalysisResult
-from src.email_analysis.shared.usecases.analize_raw_text import AnalyzeRawTextUseCase
-from src.email_analysis.shared.usecases.extract_file import ExtractFileUseCase
+from src.analyze.models.analyze_result import AnalyzeResult
+from src.analyze.usecases.analize_raw_text import AnalyzeRawTextUseCase
+from src.analyze.usecases.extract_file import ExtractFileUseCase
 
 
 class AnalyzeByFileController:
@@ -15,7 +15,7 @@ class AnalyzeByFileController:
         self.extract_file = extract_file_use_case
         pass
 
-    async def execute(self, file: UploadFile) -> AnalysisResult:
+    async def execute(self, file: UploadFile) -> AnalyzeResult:
         raw_text = await self.extract_file.execute(file)
         response = await self.analyze_raw_text.execute(raw_text)
         return response

@@ -3,7 +3,7 @@ from typing import Literal, Optional
 
 
 @dataclass
-class AnalysisResult:
+class AnalyzeResult:
     subject: str
     type: Literal["Produtivo", "Improdutivo"]
     text: str
