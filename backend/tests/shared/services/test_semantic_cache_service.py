@@ -1,18 +1,11 @@
 import hashlib
-import json
 from unittest.mock import MagicMock
 
 import pytest
 from sqlalchemy.orm import Session
 
-from src.shared.infra.database.semantic_cache_model import SemanticCache
-from src.shared.infra.database.semantic_cache_repository import SemanticCacheRepository
-from src.shared.services.semantic_cache_service import SemanticCacheService
-
-
-@pytest.fixture
-def mock_db_session():
-    return MagicMock(spec=Session)
+from src.semantic_cache.repository import SemanticCacheRepository
+from src.semantic_cache.service import SemanticCacheService
 
 
 @pytest.fixture
@@ -22,8 +15,8 @@ def mock_semantic_cache_repository():
 
 @pytest.fixture
 def semantic_cache_service(mock_semantic_cache_repository):
-    service = SemanticCacheService(MagicMock(spec=Session)) # Pass a dummy session, as the mock repository will be used
-    service.repository = mock_semantic_cache_repository # Replace the real repository with the mock
+    service = SemanticCacheService(MagicMock(spec=Session)) 
+    service.repository = mock_semantic_cache_repository 
     return service
 
 
@@ -34,25 +27,22 @@ def test_generate_hash():
     assert service._generate_hash(text) == expected_hash
 
 def test_cache_miss_and_store(semantic_cache_service, mock_semantic_cache_repository):
-    # Mock repository to return None for get_by_id (cache miss)
     mock_semantic_cache_repository.get_by_id.return_value = None
 
-    mock_llm_callable = MagicMock(return_value={"type": "Produtivo"})
+    mock_llm_callable = MagicMock(return_value={"type": "Produtivo", "id": "some_id"})
+    prompt = "Analyze this email content"
     input_text = "new email content"
 
-    result = semantic_cache_service.get_or_generate(input_text, mock_llm_callable)
+    result = semantic_cache_service.get_or_generate(input_text, prompt, mock_llm_callable)
 
-    # Assert LLM callable was called
-    mock_llm_callable.assert_called_once_with(input_text)
+    mock_llm_callable.assert_called_once_with(prompt)
 
-    # Assert result is from LLM
-    assert result == {"type": "Produtivo"}
-
-    # Assert repository insert was called
     expected_hash = hashlib.sha256(input_text.encode('utf-8')).hexdigest()
     mock_semantic_cache_repository.insert.assert_called_once_with(
-        expected_hash, input_text, {"type": "Produtivo"}
+        expected_hash, input_text, {"type": "Produtivo", "id": expected_hash }
     )
+    assert result == {"type": "Produtivo", "id": expected_hash }
+
 
 
 def test_cache_hit(semantic_cache_service, mock_semantic_cache_repository):
@@ -62,19 +52,17 @@ def test_cache_hit(semantic_cache_service, mock_semantic_cache_repository):
         "llm_result_json": {"type": "Improdutivo"},
         "created_at": "2023-01-01T12:00:00Z",
     }
-    # Mock repository to return cached data for get_by_id (cache hit)
+    
     mock_semantic_cache_repository.get_by_id.return_value = cached_data
  
     mock_llm_callable = MagicMock()
+    prompt = "Analyze this email content"
     input_text = "cached email content"
 
-    result = semantic_cache_service.get_or_generate(input_text, mock_llm_callable)
+    result = semantic_cache_service.get_or_generate(input_text, prompt, mock_llm_callable)
 
-    # Assert LLM callable was NOT called
     mock_llm_callable.assert_not_called()
 
-    # Assert result is from cache
     assert result == cached_data["llm_result_json"]
 
-    # Assert repository insert was NOT called
     mock_semantic_cache_repository.insert.assert_not_called()

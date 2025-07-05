@@ -1,13 +1,12 @@
-import json
 from unittest.mock import MagicMock
 
 import pytest
 
-from src.email_analysis.shared.models.analysis_result import AnalysisResult
-from src.email_analysis.shared.usecases.analize_raw_text import AnalyzeRawTextUseCase
+from src.analyze.models.analyze_result import AnalyzeResult
+from src.analyze.usecases.analize_raw_text import AnalyzeRawTextUseCase
+from src.semantic_cache.service import SemanticCacheService
 from src.shared.services.llm import LLMService
 from src.shared.services.nlp import NLPService
-from src.shared.services.semantic_cache_service import SemanticCacheService
 
 
 @pytest.fixture
@@ -54,7 +53,7 @@ async def test_analyze_raw_text_use_case_with_cache_hit(
 
     mock_nlp_service.pipeline.assert_called_once_with(raw_text)
     mock_semantic_cache_service.get_or_generate.assert_called_once()
-    assert isinstance(result, AnalysisResult)
+    assert isinstance(result, AnalyzeResult)
     assert result.type == "Produtivo"
     assert result.timestamp == "2023-01-01T12:00:00Z"
 
@@ -79,6 +78,6 @@ async def test_analyze_raw_text_use_case_with_cache_miss(
 
     mock_nlp_service.pipeline.assert_called_once_with(raw_text)
     mock_semantic_cache_service.get_or_generate.assert_called_once()
-    assert isinstance(result, AnalysisResult)
+    assert isinstance(result, AnalyzeResult)
     assert result.type == "Improdutivo"
     assert result.timestamp == "2023-01-02T10:00:00Z"

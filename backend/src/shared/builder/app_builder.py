@@ -1,8 +1,8 @@
 from fastapi import APIRouter, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from src.api.route import api_router
-from src.shared.infra.database.database import Base, engine
+from src.dependences import db
+from src.routes.route import api_router
 from src.shared.middleware.error import generic_exception_handler
 
 
@@ -33,8 +33,7 @@ class AppBuilder:
 
 
 def create_app() -> FastAPI:
-    Base.metadata.create_all(bind=engine)  # Create database tables
-
+    db.create_tables()
     app_builder = AppBuilder()
 
     app = app_builder.\

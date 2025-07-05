@@ -4,11 +4,11 @@ import re
 from dateutil import parser
 from fastapi import HTTPException
 
-from src.email_analysis.shared.models.analysis_result import AnalysisResult
-from src.email_analysis.shared.prompts.analyze_raw_text import analyze_raw_text_prompt
+from src.analyze.models.analyze_result import AnalyzeResult
+from src.analyze.prompts.analyze_raw_text import analyze_raw_text_prompt
+from src.semantic_cache.service import SemanticCacheService
 from src.shared.services.llm import LLMService
 from src.shared.services.nlp import NLPService
-from src.shared.services.semantic_cache_service import SemanticCacheService
 
 DATE_PATTERNS = [
     r"\d{1,2} de \w+ de \d{4} às \d{1,2}:\d{2}",  # 2 de julho de 2025 às 17:03
@@ -49,7 +49,7 @@ class AnalyzeRawTextUseCase:
                     continue
         return None
 
-    async def execute(self, raw_text: str) -> AnalysisResult:
+    async def execute(self, raw_text: str) -> AnalyzeResult:
         self.protect(raw_text)
         cleaned_text = self.nlp.pipeline(raw_text)
         prompt = analyze_raw_text_prompt(cleaned_text)
@@ -67,7 +67,6 @@ class AnalyzeRawTextUseCase:
                     else:
                         response_json_str = response
 
-                    print(f"[LLM] Resposta do LLM: {response_json_str}")
                     response_data = json.loads(response_json_str)
                     return response_data
 
@@ -78,6 +77,7 @@ class AnalyzeRawTextUseCase:
                         )
             raise Exception("Falha ao gerar resposta do LLM.")
 
+        # Remover daqui
         response_data = self.semantic_cache.get_or_generate(
             input_text= cleaned_text,
             prompt= prompt,
@@ -89,5 +89,5 @@ class AnalyzeRawTextUseCase:
             if timestamp:
                 response_data["timestamp"] = timestamp
 
-        return AnalysisResult(**response_data)
+        return AnalyzeResult(**response_data)
 

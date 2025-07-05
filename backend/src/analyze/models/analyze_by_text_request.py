@@ -1,5 +1,5 @@
 from pydantic import BaseModel
 
 
-class EmailAnalysisByTextRequest(BaseModel):
+class AnalyzeByTextRequest(BaseModel):
     text: str
