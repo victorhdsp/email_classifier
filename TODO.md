@@ -103,10 +103,12 @@
 
 * [x] featere(backend): Cache semântico para evitar chamadas repetidas à IA. ***!!
     [x] adicionar banco de dados
-* [ ] featere(frontend): Adicionar persistência para os elementos já classificados. ***!!
-    [ ] adicionar remoção dos já adicionados.
-    [ ] adicionar busca dos elementos já adicionados.
-    [ ] adicionar filtragem dos elementos já adicionados.
+* [x] featere(frontend): Adicionar persistência para os elementos já classificados. ***!!
+    [x] adicionar remoção dos já adicionados.
+    [x] adicionar busca dos elementos já adicionados.
+    [x] adicionar filtragem dos elementos já adicionados.
+* [ ] feature(fullstack): Adicionar um sistema assincrono para receber os resultados. ***!!
+    [ ] adicionar um sistema de filas
 * [ ] feature(frontend): Adicionar transições suaves para as mudanças no frontend. **!!
 * [ ] featere(backend): Implementar envio em lote (upload múltiplo). *!!
 

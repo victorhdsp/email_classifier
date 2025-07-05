@@ -27,7 +27,7 @@ def analyze_raw_text_prompt(raw_text: str) -> str:
         f"4. O campo 'timestamp' é opcional e deve conter a data e hora do e-mail "
         f"   no formato ISO 8601 (YYYY-MM-DDTHH:MM:SSZ)."
         f"5. Se o e-mail não contiver informações suficientes para determinar a classificação, "
-        f"   retorne 'Improdutivo' e preencha os outros campos obrigatórios com 'N/A'."
+        f"   retorne 'Improdutivo' e preencha os outros campos subject e text com 'N/A'."
         f"6. Se o e-mail contiver informações suficientes, preencha os campos de forma consistente."
         f"7. Se o e-mail não contiver timestamp, não inclua o campo na resposta final."
         f"</rules>"
