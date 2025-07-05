@@ -6,6 +6,7 @@ import SidebarHeader from './SidebarAttributes/SidebarHeader';
 import NoResultsDisplay from './SidebarResult/NoResultsDisplay';
 import ResultItem from './SidebarResult/ResultItem';
 import * as Accordion from '@radix-ui/react-accordion';
+import FilterAndSearch from './FilterAndSearch';
 
 interface EmailSidebarProps {
   sidebarOpen: boolean;
@@ -52,26 +53,14 @@ function EmailSidebar({ sidebarOpen, setSidebarOpen, results, onRemoveResult }: 
         data-tour="sidebar-results"
       >
         <div className={styles.sidebarContent}>
-          <SidebarHeader />
+          <SidebarHeader resultsCount={filteredResults.length} />
 
-          <div className={styles.filterContainer}>
-            <input
-              type="text"
-              placeholder="Buscar por assunto ou conteúdo..."
-              className={styles.searchBar}
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            <select
-              className={styles.filterSelect}
-              value={filterType}
-              onChange={(e) => setFilterType(e.target.value as 'all' | 'Produtivo' | 'Improdutivo')}
-            >
-              <option value="all">Todos os Tipos</option>
-              <option value="Produtivo">Produtivo</option>
-              <option value="Improdutivo">Improdutivo</option>
-            </select>
-          </div>
+          <FilterAndSearch
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            filterType={filterType}
+            setFilterType={setFilterType}
+          />
 
           <div className={styles.resultsContainer}>
             {filteredResults.length === 0 ? (

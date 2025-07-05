@@ -1,5 +1,5 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import EmailSidebar from './EmailSidebar/index';
+import { render, screen } from '@testing-library/react';
+import EmailSidebar from './index';
 import { vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
 
