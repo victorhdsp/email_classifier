@@ -4,7 +4,7 @@ from src.shared.services.llm import LLMAdapter
 
 
 class HuggingFaceService(LLMAdapter):
-    def __init__(self, model_name: str = "mistral-7b", token: str = None):
+    def __init__(self, token: str, model_name: str = "mistral-7b"):
         self.api_url = f"https://api-inference.huggingface.co/models/{model_name}"
         self.headers = {"Authorization": f"Bearer {token}"} if token else {}
 

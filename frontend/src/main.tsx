@@ -1,14 +1,11 @@
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
-import { ToastProvider } from './app/components/shared/Toast/provider';
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
 
-import App from './app/index';
-import './index.scss';
+import App from '@/app/shared/components/views/Entrypoint'
+import './index.scss'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <ToastProvider>
-      <App />
-    </ToastProvider>
-  </StrictMode>
-);
+    <App />
+  </StrictMode>,
+)

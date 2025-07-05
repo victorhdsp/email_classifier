@@ -7,3 +7,5 @@ PyMuPDF
 python-multipart
 starlette
 python-dateutil
+sqlalchemy
+psycopg2-binary
