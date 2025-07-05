@@ -62,7 +62,12 @@ function EmailSidebar({ sidebarOpen, setSidebarOpen, results, onRemoveResult }: 
             {filteredResults.length === 0 ? (
               <NoResultsDisplay />
             ) : (
-              <Accordion.Root type="single" collapsible className={styles.resultsList}>
+              <Accordion.Root
+                type="single"
+                collapsible
+                defaultValue={results[0]?.id}
+                className={styles.resultsList}
+              >
                 {filteredResults.map((result) => (
                   <ResultDisplayItem key={result.id} result={result} onRemove={onRemoveResult} />
                 ))}
