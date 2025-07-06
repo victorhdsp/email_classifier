@@ -27,6 +27,15 @@ Para o llm decidi utilizar o `google gemini`, mais específicamente o "gemini-1.
 
 Coloquei como um fallback para o caso do Gemini falhar, seja pelo excesso do limite gratuito, por estar fora do ar ou por algum erro, nesse caso estou usando o `hugging faces`, com o modelo `mistral-7b`, a versão gratuita do hugging faces tem o problema de ser meio lenta, por isso estou usando como fallback e não como principal, relação a custos o hugging faces cobra por hardware e não por token.
 
+Cache, é relativamente comum que várias pessoas recebam o mesmo e-mail dentro de uma empresa, então penso que faz sentido que esso seja tradado somente uma vez, pensando baixo considerando que tenha ao longo do tempo eles enviem 10000 emails e 30% é compartilhado entre 2 funcionarios, então 1500 emails não passaram pelo processo da I.A. Apesar de normalmente se utilizar `redis` para cache por ser mais rápido, nesse caso escolhi utilizar o `postgres`, meu foco aqui não é a velocidade apesar do postgres tambem ser bem rápido, mas sim evitar custo e processamento, e-mails podem ser encaminhados ao longo do tempo e um banco `sql` me traz a vantagem de ter persistência.
+
+Conexão assincrona, como tera uma quantidade muito grande de usuários e o usuário não precisa dos dados instantaneamente (é uma analize então tem aval para demorar um pouco), faz sentido fazer esse processo em `fila`, porque evita sobrecarregar o servidor. Porém isso vem com uma camada de problemas, se os dados não vão retornar na hora então o cliente precisa buscar o resultado de forma assincrona, se ele pode buscar de forma assincrona então eu preciso de um sistema de `autenticação` para que outras pessoas não pegem os dados dele, além disso ele precisa saber quando os resultados estão prontos para poder pedir.
+
+    - Para as filas idelmente faz sentido persistir os dados em um `redis` para o caso do sistema desligar isso não ficar perdido, não estou fazendo por falta de tempo, mas fica o débito técnico.
+
+    - Para a autenticação escolhi utilizar uma autenticação anônima, para não ter que lidar com questões de e-mail, senha, recuperação e afins, mas está construido de forma que é fácil de adicionar, basta criar um ID unico para o usuário e substituir o token baseado em ip e user-agent.
+
+    - Para o aviso, conheço basicamente 3 formas de fazer isso, me encontrei em um ponto específico, o ideial para essa aplicação era usar `push_notifications` os 4KB que da pra enviar por ela é mais que o suficiente para o tipo de dado, ela basicamente não aumenta o custo do projeto e ainda serve como um aviso para o usuário de que está pronto, mas ela precisa de permissão do usuário e precisaria conversar com os steakholders para entender se é uma possíbilidade tornar obrigatório o aceite e qual o navegador padrão o usuário usa na empresa, porque nem todos tem suporte um exemplo é o Microsoft Edge. Por isso minha escolha foi por SSE, ela mantem uma conexão entre o cliente e servidor que permite o servidor avisar quando estiver pronto, contanto que o usuario esteja conectado e é adiciona menos custo a aplicação que o Websocket que seria a terceira forma, mas como uma proposta eu colocaria o SSE como fallback para o Push notification.
 ---
 
 ## **2. Frontend**
@@ -60,6 +69,10 @@ A `sidebar` em telas maiores deve cobrir a lateral direita da tela quando estive
 ### Feedback
 
 Para o `formulário` vou utilizar uma barra de progresso que determina o quanto do arquivo já foi enviado para o servidor e após isso, vai se iniciar um segundo loading avisando que está analisando para que o usuário tenha alguma atualização sobre o que esta acontecendo.
+
+Foi adicionado um toast para avisar ao usuário sobre eventuais erros e ao adicionar novos resultados.
+
+Foi adicionado um botão na extremidade inferior direita que inicia um onboarding para o que o usuário tenha uma baixa curva de aprendizado, o onboarding tambem é executado na primeira vez que o usuário abre o programa (nesse caso por navegador).
 
 ---
 
@@ -125,6 +138,16 @@ Para lidar com a reutilização de código criar uma shared a nivel de funcional
 |-------- error.py
 ```
 
+#### Cache
+
+Estou utilizando postgres para o banco de dados e os dados guardados vão ser `id`, `input` e `output`.
+
+```
+id      TEXT    PRIMARY KEY, # Representa um hash do valor de input
+input   TEXT    NOT     NULL, # Representa o conteúdo limpo, depois do nlp.
+output  JSONB   NOT     NULL # Representa o resultado gerado pela I.A.
+```
+
 ---
 
 ## **4. Integração Frontend + Backend**
@@ -133,12 +156,17 @@ A integração vai ser feito por HTTP em uma API Rest padrão, principalmente co
 
 ---
 
-## **5. Deploy**
+## **5. Logs**
+
+Não vou adicionar um sistema externo de logs tipo um sentry, porque eu não tenho espaço em uma plano gratuito para o projeto, mas deixei os logs com wrappers, então seria em teoria só chamar a API deles ali e enviar, ou se quiser fazer um interno capturar eles ali e salvar.
+
+Para o caso do frontend, se for fazer um sistema interno teria que criar um rota no backend para onde enviaria os logs através do wrapper.
 
 ---
 
 ## **6. Documentação**
 
+Fiz a documentação utilizando Swagger UI e OpenAPI, que já é o padrão do framework (fastAPI) é a forma mais simples e extremamente funcional, o swagger funciona bem para testar e o OpenAPI é mais agradavel visualmente.
 ---
 
 ## Features extras

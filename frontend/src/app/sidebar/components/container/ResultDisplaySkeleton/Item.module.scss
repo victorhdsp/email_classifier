@@ -1,0 +1,72 @@
+.resultItem {
+  @apply p-4;
+
+  .resultButton {
+    @apply w-full text-left space-y-2;
+
+    .resultHeader {
+      @apply flex items-start justify-between;
+
+      .resultSubjectContainer {
+        @apply flex-1 min-w-0;
+
+        .resultSubjectSkeleton {
+          @apply w-4/5 h-6 mb-1;
+        }
+
+        .resultTypeContainer {
+          @apply flex items-center space-x-2 mt-1;
+
+          .resultType {
+            @apply inline-flex items-center px-2 py-1 rounded-full text-xs font-medium;
+
+            .resultTypeSkeleton {
+              @apply w-24 h-4;
+            }
+          }
+
+          .resultTypeIcon {
+            @apply w-3 h-3 mr-1;
+          }
+        }
+      }
+
+      .resultActions {
+        @apply flex items-center space-x-2 ml-2;
+
+        .resultActionIcon {
+          @apply w-4 h-4 text-gray-400;
+        }
+
+        .resultChevron {
+          @apply w-4 h-4 text-gray-400 transition-transform;
+        }
+
+        
+        .removeButton {
+          @apply p-1 text-gray-400 hover:text-red-500 transition-colors;
+        }
+      }
+    }
+    
+    &[data-state="open"] .resultChevron {
+      @apply rotate-90;
+    }
+  }
+
+  .expandedContent {
+    @apply mt-3 pl-2 border-l-2 border-blue-100 space-y-3;
+
+    .expandedContentTitle {
+      @apply text-xs font-medium text-gray-500 uppercase tracking-wide;
+    }
+
+    .expandedContentTextSkeleton {
+      @apply w-full h-12;
+    }
+
+    .expandedContentTimestampSkeleton {
+      @apply w-32 h-4;
+    }
+  }
+}

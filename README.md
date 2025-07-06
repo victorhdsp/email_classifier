@@ -12,6 +12,10 @@ O objetivo é automatizar a leitura e classificação desses emails e sugerir cl
 **Backend**
 https://email-classifier-6kdu.onrender.com/v1/health
 
+**Documentação**
+https://email-classifier-6kdu.onrender.com/redoc
+https://email-classifier-6kdu.onrender.com/docs
+
 **Frontend**
 https://email-classifier-gamma-eight.vercel.app
 
