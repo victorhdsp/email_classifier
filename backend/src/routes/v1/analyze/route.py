@@ -8,27 +8,12 @@ from src.dependences import (
     extract_file_use_case,
     pre_proccess_use_case,
 )
-from src.shared.models.error_response import ErrorDetail
+from src.routes.v1.analyze.analyze_doc import handle_file_doc, handle_text_doc
 
-analyze_router = APIRouter(prefix="/email", tags=["Análise"])
+analyze_router = APIRouter(prefix="/email")
 
 
-@analyze_router.post(
-    "/analyze/file",
-    summary="Analisar e-mail a partir de um arquivo",
-    description="Extrai o texto de um arquivo de e-mail (.eml, .txt) e o classifica como produtivo ou improdutivo.",
-    response_description="O resultado da análise do e-mail.",
-    responses={
-        status.HTTP_401_UNAUTHORIZED: {
-            "description": "Usuário não autenticado.",
-            "model": ErrorDetail,
-        },
-        status.HTTP_500_INTERNAL_SERVER_ERROR: {
-            "description": "Erro interno no servidor.",
-            "model": ErrorDetail,
-        },
-    },
-)
+@analyze_router.post("/analyze/file", **handle_file_doc)
 async def handle_file(request: Request, file: UploadFile = File(...)) -> AnalyzeFullResult:
     user_token = getattr(request.state, "user_token", "")
     if not user_token or user_token.strip() == "":
@@ -44,22 +29,7 @@ async def handle_file(request: Request, file: UploadFile = File(...)) -> Analyze
     return result_data
 
 
-@analyze_router.post(
-    "/analyze/json",
-    summary="Analisar e-mail a partir de um texto em JSON",
-    description="Recebe um objeto JSON com o texto do e-mail e o classifica como produtivo ou improdutivo.",
-    response_description="O resultado da análise do e-mail.",
-    responses={
-        status.HTTP_401_UNAUTHORIZED: {
-            "description": "Usuário não autenticado.",
-            "model": ErrorDetail,
-        },
-        status.HTTP_500_INTERNAL_SERVER_ERROR: {
-            "description": "Erro interno no servidor.",
-            "model": ErrorDetail,
-        },
-    },
-)
+@analyze_router.post("/analyze/json", **handle_text_doc)
 async def handle_text(request: Request, data: AnalyzeByTextRequest) -> AnalyzeFullResult:
     user_token = getattr(request.state, "user_token", "")
     if not user_token or user_token.strip() == "":

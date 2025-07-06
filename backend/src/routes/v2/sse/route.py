@@ -1,32 +1,21 @@
 import asyncio
 import json
 
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, HTTPException, Request, status
 from fastapi.responses import StreamingResponse
+
+from src.routes.v2.sse.sse_doc import sse_endpoint_doc
 
 user_queues: dict[str, asyncio.Queue] = {}
 
 sse_router = APIRouter()
 
-@sse_router.get(
-    "/sse",
-    summary="Servidor de Eventos de Streaming (SSE)",
-    description="Endpoint para receber eventos de streaming via Server-Sent Events (SSE).",
-    responses={
-        401: {
-            "description": "Usuário não autenticado.",
-            "content": {
-                "application/json": {
-                    "example": {"detail": "Usuário não autenticado."}
-                }
-            },
-        },
-    },
-)
+
+@sse_router.get("/sse", **sse_endpoint_doc)
 async def sse_endpoint(request: Request):
     user_token = getattr(request.state, "user_token", "")
     if not user_token or user_token.strip() == "":
-            raise HTTPException(status_code=401, detail="Usuário não autenticado.")
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Usuário não autenticado.")
 
     queue = asyncio.Queue()
     user_queues[user_token] = queue
