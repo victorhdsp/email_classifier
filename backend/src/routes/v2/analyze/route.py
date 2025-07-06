@@ -1,13 +1,14 @@
+
 from fastapi import APIRouter, BackgroundTasks, File, HTTPException, Request, UploadFile
 
 from src.analyze.models.analyze_by_text_request import AnalyzeByTextRequest
 from src.analyze.models.analyze_result import AnalyzeFullResult, AnalyzeLoadingResult
 from src.dependences import (
     collect_data_use_case,
-    create_data_use_case,
     extract_file_use_case,
     pre_proccess_use_case,
 )
+from src.shared.services.processing_queue import processing_queue_service
 
 analyze_router = APIRouter(prefix="/email")
 
@@ -20,7 +21,8 @@ async def handle_file(request: Request, background_tasks: BackgroundTasks, file:
     raw_text = await extract_file_use_case.execute(file)
     loading_data = pre_proccess_use_case.execute(raw_text)
 
-    background_tasks.add_task(create_data_use_case.execute, user_token, loading_data)
+    await processing_queue_service.enqueue(user_token, loading_data)
+
     return loading_data
 
 
@@ -33,7 +35,8 @@ async def handle_text(request: Request, background_tasks: BackgroundTasks, data:
 
     loading_data = pre_proccess_use_case.execute(data.text)
     
-    background_tasks.add_task(create_data_use_case.execute, user_token, loading_data)
+    await processing_queue_service.enqueue(user_token, loading_data)
+
     return loading_data
 
 
