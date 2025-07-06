@@ -43,23 +43,15 @@ class CreateDataUseCase:
     async def execute(self, user_token: str, loadingResult: AnalyzeLoadingResult) -> AnalyzeFullResult:
         prompt = analyze_raw_text_prompt(loadingResult.text)
 
-        response_data = self.semantic_cache.generate(
+        response_data = self.semantic_cache.generate_or_get(
             loadingResult= loadingResult,
             prompt= prompt,
             llm_callable= self.llm_callable,
             user_token= user_token,
         )
 
-        if not response_data:
-            raise Exception(
-                "Este dado já foi processado anteriormente."
-            )
-
         result = AnalyzeFullResult(
             **response_data,
-            id=loadingResult.id,
-            text=loadingResult.text,
-            timestamp=loadingResult.timestamp,
         )
 
         return result

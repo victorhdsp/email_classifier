@@ -10,19 +10,19 @@ class SemanticCacheService:
     def __init__(self, db: Session):
         self.repository = SemanticCacheRepository(db)
 
-    def generate(
+    def generate_or_get(
         self,
         user_token: str,
         prompt: str,
         loadingResult: AnalyzeLoadingResult,
         llm_callable: Callable[[str], dict]
-    ) -> dict | None:
+    ) -> dict:
         cached_result = self.repository.get_by_id(loadingResult.id)
 
         if cached_result:
             print(f"[SemanticCache] Cache hit for ID: {loadingResult.id}")
             self.repository.update_owners(loadingResult.id, user_token)
-            return None
+            return cached_result["llm_result_json"]
 
         print(f"[SemanticCache] Cache miss for ID: {loadingResult.id}. Calling LLM...")
         llm_response = llm_callable(prompt)
@@ -32,7 +32,7 @@ class SemanticCacheService:
         print(f"[SemanticCache] LLM response cached for ID: {loadingResult.id}")
         return llm_response 
 
-    def get(
+    def verify_and_get(
         self, 
         user_token: str,
         cache_id: str,

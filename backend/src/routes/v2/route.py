@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 
 from src.routes.v2.analyze.route import analyze_router
+from src.routes.v2.sse.route import sse_router
 
 v2_router = APIRouter(prefix="/v2")
 
@@ -11,3 +12,4 @@ async def health_check():
 
 
 v2_router.include_router(analyze_router)
+v2_router.include_router(sse_router)

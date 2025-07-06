@@ -30,11 +30,13 @@ class AutenticationMiddleware(BaseHTTPMiddleware):
             user_agent=user_agent,
             ip=ip,
         )
+
         if not validUser:
-            return Response(
-                content="Usuário não autenticado ou inválido.",
-                status_code=401,
-                headers={"WWW-Authenticate": "Bearer"},
+            token = generate_token(ip, user_agent)
+            autentication_service.newUser(
+                user_token=token,
+                user_agent=user_agent,
+                ip=ip,
             )
 
         request.state.user_token = token

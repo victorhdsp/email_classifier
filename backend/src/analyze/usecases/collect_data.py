@@ -13,7 +13,7 @@ class CollectDataUseCase:
         pass
 
     async def execute(self, user_token: str, result_id: str) -> AnalyzeFullResult | None:
-        response_data = self.semantic_cache.get(user_token, result_id)
+        response_data = self.semantic_cache.verify_and_get(user_token, result_id)
 
         if not response_data:
             return None
