@@ -100,8 +100,8 @@ export class GatewayService {
       logger.info('SSE connection opened.')
     }
 
-    eventSource.onerror = (error) => {
-      logger.error('SSE connection error.', error)
+    eventSource.onerror = () => {
+      //logger.error('SSE connection error.', error)
     }
 
     return eventSource

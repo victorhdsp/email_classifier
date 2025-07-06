@@ -9,22 +9,22 @@
 export const logger = {
   log: (...args: any[]) => {
     if (import.meta.env.DEV) {
-      logger.log(...args)
+      console.log(...args)
     }
   },
   warn: (...args: any[]) => {
     if (import.meta.env.DEV) {
-      logger.warn(...args)
+      console.warn(...args)
     }
   },
   error: (...args: any[]) => {
     if (import.meta.env.DEV) {
-      logger.error(...args)
+      console.error(...args)
     }
   },
   info: (...args: any[]) => {
     if (import.meta.env.DEV) {
-      logger.info(...args)
+      console.info(...args)
     }
   },
 }
