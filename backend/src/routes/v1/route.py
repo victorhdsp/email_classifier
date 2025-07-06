@@ -2,7 +2,7 @@ from fastapi import APIRouter
 
 from src.routes.v1.analyze.route import analyze_router
 
-v1_router = APIRouter(prefix="/v1")
+v1_router = APIRouter(prefix="/v1", tags=["Versão 1"])
 
 
 @v1_router.get("/health")

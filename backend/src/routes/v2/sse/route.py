@@ -8,7 +8,21 @@ user_queues: dict[str, asyncio.Queue] = {}
 
 sse_router = APIRouter()
 
-@sse_router.get("/sse")
+@sse_router.get(
+    "/sse",
+    summary="Servidor de Eventos de Streaming (SSE)",
+    description="Endpoint para receber eventos de streaming via Server-Sent Events (SSE).",
+    responses={
+        401: {
+            "description": "Usuário não autenticado.",
+            "content": {
+                "application/json": {
+                    "example": {"detail": "Usuário não autenticado."}
+                }
+            },
+        },
+    },
+)
 async def sse_endpoint(request: Request):
     user_token = getattr(request.state, "user_token", "")
     if not user_token or user_token.strip() == "":
