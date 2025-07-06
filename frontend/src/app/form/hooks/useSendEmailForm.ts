@@ -1,10 +1,9 @@
 import { useState } from 'react'
-import { EmailResult, UploadedFile } from '../../shared/components/views/AppContent/types'
-import axios, { AxiosError } from 'axios'
+import { EmailLoadingResult, UploadedFile } from '../../shared/components/views/AppContent/types'
+import { AxiosError } from 'axios'
 import { useToast } from '../../shared/components/providers/Toast/context'
 import { useUploadMode } from './useUploadMode'
-
-axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL
+import { gatewayService } from '@/app/dependences'
 
 const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024 // 10 MB
 const SUPPORTED_FILE_TYPES = ['text/plain', 'application/pdf']
@@ -21,30 +20,6 @@ function validateFile(file: File) {
   }
 }
 
-async function analyzeText(text: string): Promise<EmailResult> {
-  if (!text.trim()) {
-    throw new Error('Text input is empty')
-  }
-  const response = await axios.post('/v1/email/analyze/json', { text })
-  return response.data
-}
-
-async function analyzeFile(
-  file: File,
-  onUploadProgress: (progress: number) => void,
-): Promise<EmailResult> {
-  const formData = new FormData()
-  formData.append('file', file)
-
-  const response = await axios.post('/v1/email/analyze/file', formData, {
-    onUploadProgress: ({ loaded, total }) => {
-      const progress = total ? Math.round((loaded * 100) / total) : 0
-      onUploadProgress(progress)
-    },
-  })
-  return response.data
-}
-
 export function useSendEmailForm() {
   const { setUploadMode, uploadMode } = useUploadMode()
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -52,30 +27,30 @@ export function useSendEmailForm() {
   const [textInput, setTextInput] = useState('')
   const toast = useToast()
 
-  const handleFileSubmit = async (file: File): Promise<EmailResult> => {
+  const handleFileSubmit = async (file: File): Promise<EmailLoadingResult> => {
     validateFile(file)
 
     if (file.type === 'text/plain' && file.size < 1024 * 1024) {
       const text = await file.text()
-      return analyzeText(text)
+      return gatewayService.analyzeText(text)
     }
 
-    return analyzeFile(file, (progress) => {
+    return gatewayService.analyzeFile(file, (progress) => {
       setUploadedFile((current) => (current ? { ...current, progress } : null))
     })
   }
 
-  const handleSubmit = async (): Promise<EmailResult | null> => {
+  const handleSubmit = async (): Promise<EmailLoadingResult | null> => {
     setIsSubmitting(true)
 
     try {
-      let result: EmailResult
+      let result: EmailLoadingResult
 
       if (uploadMode === 'file') {
         if (!uploadedFile?.file) throw new Error('No file selected.')
         result = await handleFileSubmit(uploadedFile.file)
       } else {
-        result = await analyzeText(textInput)
+        result = await gatewayService.analyzeText(textInput)
       }
 
       setUploadedFile(null)

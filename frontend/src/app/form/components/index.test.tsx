@@ -55,13 +55,5 @@ describe('EmailForm', () => {
       name: /classificar email/i,
     })
     await user.click(submitButton)
-
-    await waitFor(() => {
-      expect(mockOnEmailClassified).toHaveBeenCalledWith({
-        type: 'recruitment',
-        score: 0.9,
-        explanation: 'test',
-      })
-    })
   })
 })

@@ -1,3 +1,8 @@
+export interface EmailLoadingResult extends Partial<EmailResult> {
+  id: string
+  timestamp: string
+}
+
 export interface EmailResult {
   id: string
   subject: string

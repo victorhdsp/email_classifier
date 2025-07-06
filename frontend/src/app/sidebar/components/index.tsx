@@ -1,5 +1,4 @@
 import { useState, useMemo } from 'react'
-import { EmailResult } from '../../shared/components/views/AppContent/types'
 import styles from './EmailSidebar.module.scss'
 import { SidebarToggleButton } from '@/app/sidebar/components/SidebarToggleButton'
 import { NoResultsDisplay } from '@/app/sidebar/components/container/NoResultsDisplay'
@@ -7,12 +6,14 @@ import { ResultDisplayItem } from '@/app/sidebar/components/container/ResultDisp
 import { SidebarHeader } from '@/app/sidebar/components/container/SidebarHeader'
 import * as Accordion from '@radix-ui/react-accordion'
 import { FilterAndSearch } from '@/app/sidebar/components/container/FilterAndSearch'
+import { EmailLoadingResult, EmailResult } from '@/app/shared/components/views/AppContent/types'
+import { ResultDisplaySkeleton } from './container/ResultDisplaySkeleton'
 
 interface EmailSidebarProps {
   sidebarOpen: boolean
   setSidebarOpen: (open: boolean) => void
-  results: EmailResult[]
   onRemoveResult: (id: string) => void
+  results: (EmailResult | EmailLoadingResult)[]
 }
 
 function EmailSidebar({ sidebarOpen, setSidebarOpen, results, onRemoveResult }: EmailSidebarProps) {
@@ -28,11 +29,14 @@ function EmailSidebar({ sidebarOpen, setSidebarOpen, results, onRemoveResult }: 
 
     if (searchTerm) {
       const lowerCaseSearchTerm = searchTerm.toLowerCase()
-      filtered = filtered.filter(
-        (result) =>
+      filtered = filtered.filter((result) => {
+        if (!result.subject || !result.text) return false
+
+        return (
           result.subject.toLowerCase().includes(lowerCaseSearchTerm) ||
-          result.text.toLowerCase().includes(lowerCaseSearchTerm),
-      )
+          result.text.toLowerCase().includes(lowerCaseSearchTerm)
+        )
+      })
     }
 
     return filtered
@@ -68,9 +72,21 @@ function EmailSidebar({ sidebarOpen, setSidebarOpen, results, onRemoveResult }: 
                 defaultValue={results[0]?.id}
                 className={styles.resultsList}
               >
-                {filteredResults.map((result) => (
-                  <ResultDisplayItem key={result.id} result={result} onRemove={onRemoveResult} />
-                ))}
+                {filteredResults.map((result) =>
+                  result.text && result.subject ? (
+                    <ResultDisplayItem
+                      key={result.id}
+                      result={result as EmailResult}
+                      onRemove={onRemoveResult}
+                    />
+                  ) : (
+                    <ResultDisplaySkeleton
+                      key={result.id}
+                      result={result as EmailLoadingResult}
+                      onRemove={onRemoveResult}
+                    />
+                  ),
+                )}
               </Accordion.Root>
             )}
           </div>

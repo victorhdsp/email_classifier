@@ -107,8 +107,13 @@
     [x] adicionar remoção dos já adicionados.
     [x] adicionar busca dos elementos já adicionados.
     [x] adicionar filtragem dos elementos já adicionados.
-* [ ] feature(fullstack): Adicionar um sistema assincrono para receber os resultados. ***!!
-    [ ] adicionar um sistema de filas
+* [x] feature(fullstack): Adicionar um sistema assincrono para receber os resultados. ***!!
+    [x] adicionar sistema assincrono no backend.
+    [x] adicionar autenticação.
+    [x] adicionar um sistema de filas.
+    [x] manter conexão aberta com usuário.
+    [x] adicionar integração assincrona no frontend.
+    [x] adicionar conexão por SSE no frontend.
 * [ ] feature(frontend): Adicionar transições suaves para as mudanças no frontend. **!!
 * [ ] featere(backend): Implementar envio em lote (upload múltiplo). *!!
 

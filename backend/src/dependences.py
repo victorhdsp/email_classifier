@@ -2,19 +2,20 @@ import os
 
 from dotenv import load_dotenv
 
-from src.analyze.controllers.analyze_by_file import AnalyzeByFileController
-from src.analyze.controllers.analyze_by_text import AnalyzeByTextController
-from src.analyze.usecases.analize_raw_text import AnalyzeRawTextUseCase
+from src.analyze.usecases.collect_data import CollectDataUseCase
+from src.analyze.usecases.create_data import CreateDataUseCase
 from src.analyze.usecases.extract_file import ExtractFileUseCase
-from src.semantic_cache.service import SemanticCacheService
+from src.analyze.usecases.pre_proccess import PreProccessUseCase
 from src.shared.infra.database import Database
 from src.shared.infra.gemini_llm import GeminiService
 from src.shared.infra.hugging_llm import HuggingFaceService
 from src.shared.infra.py_mu_pdf import PyMuPDFService
 from src.shared.infra.spacy_npl import SpacyNLPAdapter
+from src.shared.services.autentication import AutenticationService
 from src.shared.services.llm import LLMService
 from src.shared.services.nlp import NLPService
 from src.shared.services.pdf import PDFService
+from src.shared.services.semantic_cache import SemanticCacheService
 
 load_dotenv()
 DATABASE_URL = os.getenv("DATABASE_URL")
@@ -42,17 +43,10 @@ pdf_service = PDFService(py_mupdf_service)
 db = Database(DATABASE_URL)
 db_session = next(db.get_db())
 semantic_cache_service = SemanticCacheService(db_session)
+autentication_service = AutenticationService(db_session)
 
-## Email Analysis
-analyze_raw_text_use_case = AnalyzeRawTextUseCase(
-    nlp_service, llm_service, semantic_cache_service
-)
+## Email Analyze
+pre_proccess_use_case = PreProccessUseCase(nlp_service)
 extract_file_use_case = ExtractFileUseCase(pdf_service)
-
-### Analysis by Text
-analyze_by_text_controller = AnalyzeByTextController(analyze_raw_text_use_case)
-
-### Analysis by File
-analyze_by_file_controller = AnalyzeByFileController(
-    analyze_raw_text_use_case, extract_file_use_case
-)
+create_data_use_case = CreateDataUseCase(llm_service, semantic_cache_service)
+collect_data_use_case = CollectDataUseCase(semantic_cache_service)

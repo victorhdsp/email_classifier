@@ -1,31 +1,33 @@
-import { ChevronRight, Tag, X } from 'lucide-react'
-import { EmailResult } from '../../../../shared/components/views/AppContent/types'
+import { ChevronRight, Clock, Tag, X } from 'lucide-react'
+import { EmailLoadingResult } from '../../../../shared/components/views/AppContent/types'
 import styles from './Item.module.scss'
-import { getLocaleDateByString } from '../../../../shared/utils/date'
 import * as Accordion from '@radix-ui/react-accordion'
+import { GenericSkeleton } from './GenericSkeleton'
 
 interface ResultItemProps {
-  result: EmailResult
+  result: EmailLoadingResult
   onRemove: (id: string) => void
 }
 
-export function ResultDisplayItem({ result, onRemove }: ResultItemProps) {
+export function ResultDisplaySkeleton({ result, onRemove }: ResultItemProps) {
   return (
     <Accordion.Item value={result.id} className={styles.resultItem}>
       <Accordion.Trigger asChild>
         <div className={styles.resultButton}>
           <div className={styles.resultHeader}>
             <div className={styles.resultSubjectContainer}>
-              <p className={styles.resultSubject}>{result.subject}</p>
+              <GenericSkeleton className={styles.resultSubjectSkeleton} />
               <div className={styles.resultTypeContainer}>
-                <span data-type={result.type} className={styles.resultType}>
+                <span className={styles.resultType}>
                   <Tag className={styles.resultTypeIcon} />
-                  {result.type}
+                  <GenericSkeleton className={styles.resultTypeSkeleton} />
                 </span>
               </div>
             </div>
             <div className={styles.resultActions}>
+              <Clock className={styles.resultActionIcon} />
               <ChevronRight className={styles.resultChevron} />
+
               <button
                 type="button"
                 onClick={(e) => {
@@ -44,14 +46,12 @@ export function ResultDisplayItem({ result, onRemove }: ResultItemProps) {
       <Accordion.Content className={styles.expandedContent}>
         <div>
           <p className={styles.expandedContentTitle}>Conteúdo</p>
-          <p className={styles.expandedContentText}>{result.text}</p>
+          <GenericSkeleton className={styles.expandedContentTextSkeleton} />
         </div>
-        {result.timestamp && (
-          <div>
-            <p className={styles.expandedContentTitle}>Data</p>
-            <p className={styles.expandedContentText}>{getLocaleDateByString(result.timestamp)}</p>
-          </div>
-        )}
+        <div>
+          <p className={styles.expandedContentTitle}>Data</p>
+          <GenericSkeleton className={styles.expandedContentTimestampSkeleton} />
+        </div>
       </Accordion.Content>
     </Accordion.Item>
   )
