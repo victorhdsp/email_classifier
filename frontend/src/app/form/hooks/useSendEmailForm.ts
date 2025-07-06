@@ -4,6 +4,7 @@ import { AxiosError } from 'axios'
 import { useToast } from '../../shared/components/providers/Toast/context'
 import { useUploadMode } from './useUploadMode'
 import { gatewayService } from '@/app/dependences'
+import { logger } from '@/app/shared/utils/logger'
 
 const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024 // 10 MB
 const SUPPORTED_FILE_TYPES = ['text/plain', 'application/pdf']
@@ -68,7 +69,7 @@ export function useSendEmailForm() {
         variant: 'error',
       })
 
-      console.error('Error during submission:', error)
+      logger.error('Error during submission:', error)
       return null
     } finally {
       setIsSubmitting(false)

@@ -1,6 +1,7 @@
 import { EmailResult } from '@/app/shared/components/views/AppContent/types'
 import { useEffect, useState } from 'react'
 import { useToast } from '../components/providers/Toast/context'
+import { logger } from '../utils/logger'
 
 const LOCAL_STORAGE_KEY = 'email_classification_results'
 
@@ -11,7 +12,7 @@ export function useResults() {
       const storedResults = localStorage.getItem(LOCAL_STORAGE_KEY)
       return storedResults ? JSON.parse(storedResults) : []
     } catch (error) {
-      console.error('Failed to parse stored results:', error)
+      logger.error('Failed to parse stored results:', error)
       return []
     }
   })
@@ -41,7 +42,7 @@ export function useResults() {
     try {
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(results))
     } catch (error) {
-      console.error('Failed to save results to local storage:', error)
+      logger.error('Failed to save results to local storage:', error)
     }
   }, [results])
 

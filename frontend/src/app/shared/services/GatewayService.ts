@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { EmailLoadingResult, EmailResult } from '../components/views/AppContent/types'
 import { EventSourcePolyfill } from 'event-source-polyfill'
+import { logger } from '../utils/logger'
 
 export class GatewayService {
   constructor(private readonly baseUrl: string) {}
@@ -49,13 +50,12 @@ export class GatewayService {
     if (!id) {
       throw new Error('ID is required to fetch the result')
     }
-    const response = await axios.get<EmailResult>(
-      `${this.baseUrl}/v2/email/${id}`,
-      { withCredentials: true },
-    )
+    const response = await axios.get<EmailResult>(`${this.baseUrl}/v2/email/${id}`, {
+      withCredentials: true,
+    })
 
     if (response.status !== 200) {
-      console.error(`Failed to fetch result with id ${id}:`, response.statusText)
+      logger.error(`Failed to fetch result with id ${id}:`, response.statusText)
       return null
     }
     return response.data
@@ -63,7 +63,7 @@ export class GatewayService {
 
   sseSubscribe(): EventSource {
     const eventSource = new EventSourcePolyfill(`${this.baseUrl}/v2/sse`, {
-      withCredentials: true
+      withCredentials: true,
     })
 
     eventSource.onerror = () => {}
