@@ -156,7 +156,11 @@ A integração vai ser feito por HTTP em uma API Rest padrão, principalmente co
 
 ---
 
-## **5. Deploy**
+## **5. Logs**
+
+Não vou adicionar um sistema externo de logs tipo um sentry, porque eu não tenho espaço em uma plano gratuito para o projeto, mas deixei os logs com wrappers, então seria em teoria só chamar a API deles ali e enviar, ou se quiser fazer um interno capturar eles ali e salvar.
+
+Para o caso do frontend, se for fazer um sistema interno teria que criar um rota no backend para onde enviaria os logs através do wrapper.
 
 ---
 
