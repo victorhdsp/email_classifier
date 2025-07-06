@@ -8,8 +8,9 @@ from src.dependences import (
     extract_file_use_case,
     pre_proccess_use_case,
 )
+from src.shared.models.error_response import ErrorDetail
 
-analyze_router = APIRouter(prefix="/email")
+analyze_router = APIRouter(prefix="/email", tags=["Análise"])
 
 
 @analyze_router.post(
@@ -20,35 +21,11 @@ analyze_router = APIRouter(prefix="/email")
     responses={
         status.HTTP_401_UNAUTHORIZED: {
             "description": "Usuário não autenticado.",
-            "content": {
-                "application/json": {
-                    "example": {"detail": "Usuário não autenticado."}
-                }
-            },
-        },
-        status.HTTP_422_UNPROCESSABLE_ENTITY: {
-            "description": "Erro de validação dos dados de entrada.",
-            "content": {
-                "application/json": {
-                    "example": {
-                        "detail": [
-                            {
-                                "loc": ["body", "file"],
-                                "msg": "O arquivo deve ser um arquivo de e-mail válido.",
-                                "type": "value_error",
-                            }
-                        ]
-                    }
-                }
-            },
+            "model": ErrorDetail,
         },
         status.HTTP_500_INTERNAL_SERVER_ERROR: {
             "description": "Erro interno no servidor.",
-            "content": {
-                "application/json": {
-                    "example": {"detail": "Falha ao criar ou coletar os dados."}
-                }
-            },
+            "model": ErrorDetail,
         },
     },
 )
@@ -75,35 +52,11 @@ async def handle_file(request: Request, file: UploadFile = File(...)) -> Analyze
     responses={
         status.HTTP_401_UNAUTHORIZED: {
             "description": "Usuário não autenticado.",
-            "content": {
-                "application/json": {
-                    "example": {"detail": "Usuário não autenticado."}
-                }
-            },
-        },
-        status.HTTP_422_UNPROCESSABLE_ENTITY: {
-            "description": "Erro de validação dos dados de entrada.",
-            "content": {
-                "application/json": {
-                    "example": {
-                        "detail": [
-                            {
-                                "loc": ["body", "text"],
-                                "msg": "O campo 'text' é obrigatório.",
-                                "type": "value_error.missing",
-                            }
-                        ]
-                    }
-                }
-            },
+            "model": ErrorDetail,
         },
         status.HTTP_500_INTERNAL_SERVER_ERROR: {
             "description": "Erro interno no servidor.",
-            "content": {
-                "application/json": {
-                    "example": {"detail": "Falha ao criar ou coletar os dados."}
-                }
-            },
+            "model": ErrorDetail,
         },
     },
 )
@@ -119,3 +72,4 @@ async def handle_text(request: Request, data: AnalyzeByTextRequest) -> AnalyzeFu
     if not result_data:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Falha ao criar ou coletar os dados.")
     return result_data
+
