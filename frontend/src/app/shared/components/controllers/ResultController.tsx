@@ -9,20 +9,18 @@ export function ResultController() {
 
   useEffect(() => {
     ;(async () => {
-      const resultEntries = Object.entries(results)
-
-      for (const [id, result] of resultEntries) {
+      for (const result of results) {
         if (result.subject) continue
 
         try {
-          const data = await gatewayService.getResult(id)
+          const data = await gatewayService.getResult(result.id)
           if (data) finishLoading(data.id, data)
         } catch (error) {
-          logger.error(`Error fetching result with id ${id}:`, error)
+          logger.error(`Error fetching result with id ${result.id}:`, error)
         }
       }
     })()
-  }, [])
+  }, [results, finishLoading])
 
   useEffect(() => {
     const eventSource = gatewayService.sseSubscribe()

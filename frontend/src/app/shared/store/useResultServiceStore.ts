@@ -18,8 +18,7 @@ export const useResultServiceStore = create<ResultServiceStore>()(
       addLoadingResult: (result: EmailLoadingResult) =>
         set((state) => {
           const existingResult = state.results.find((r) => r.id === result.id)
-          if (!existingResult) 
-            return { results: [...state.results, result] }
+          if (!existingResult) return { results: [...state.results, result] }
 
           return { results: state.results }
         }),
@@ -28,6 +27,10 @@ export const useResultServiceStore = create<ResultServiceStore>()(
           const index = state.results.findIndex((r) => r.id === id)
           if (index === -1) {
             return { results: [...state.results, result] }
+          }
+
+          if (state.results[index].subject) {
+            return { results: state.results }
           }
 
           const results = state.results.map((r) => (r.id === id ? { ...r, ...result } : r))
