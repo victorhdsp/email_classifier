@@ -6,15 +6,16 @@ from src.analyze.usecases.collect_data import CollectDataUseCase
 from src.analyze.usecases.create_data import CreateDataUseCase
 from src.analyze.usecases.extract_file import ExtractFileUseCase
 from src.analyze.usecases.pre_proccess import PreProccessUseCase
-from src.semantic_cache.service import SemanticCacheService
 from src.shared.infra.database import Database
 from src.shared.infra.gemini_llm import GeminiService
 from src.shared.infra.hugging_llm import HuggingFaceService
 from src.shared.infra.py_mu_pdf import PyMuPDFService
 from src.shared.infra.spacy_npl import SpacyNLPAdapter
+from src.shared.services.autentication import AutenticationService
 from src.shared.services.llm import LLMService
 from src.shared.services.nlp import NLPService
 from src.shared.services.pdf import PDFService
+from src.shared.services.semantic_cache import SemanticCacheService
 
 load_dotenv()
 DATABASE_URL = os.getenv("DATABASE_URL")
@@ -42,6 +43,7 @@ pdf_service = PDFService(py_mupdf_service)
 db = Database(DATABASE_URL)
 db_session = next(db.get_db())
 semantic_cache_service = SemanticCacheService(db_session)
+autentication_service = AutenticationService(db_session)
 
 ## Email Analyze
 pre_proccess_use_case = PreProccessUseCase(nlp_service)

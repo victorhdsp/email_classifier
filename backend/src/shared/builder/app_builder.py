@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from src.dependences import db
 from src.routes.route import api_router
+from src.shared.middleware.auth import AutenticationMiddleware
 from src.shared.middleware.error import generic_exception_handler
 
 
@@ -12,6 +13,10 @@ class AppBuilder:
 
     def with_routes(self, routes: APIRouter) -> "AppBuilder":
         self.app.include_router(routes)
+        return self
+
+    def with_middleware(self) -> "AppBuilder":
+        self.app.add_middleware(AutenticationMiddleware)
         return self
 
     def with_exception_handlers(self) -> "AppBuilder":
@@ -36,9 +41,10 @@ def create_app() -> FastAPI:
     db.create_tables()
     app_builder = AppBuilder()
 
-    app = app_builder.\
-        with_exception_handlers()\
+    app = app_builder\
+        .with_exception_handlers()\
         .with_cors()\
+        .with_middleware()\
         .with_routes(api_router)\
         .build()
 

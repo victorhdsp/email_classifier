@@ -3,8 +3,8 @@ import re
 
 from src.analyze.models.analyze_result import AnalyzeFullResult, AnalyzeLoadingResult
 from src.analyze.prompts.analyze_raw_text import analyze_raw_text_prompt
-from src.semantic_cache.service import SemanticCacheService
 from src.shared.services.llm import LLMService
+from src.shared.services.semantic_cache import SemanticCacheService
 
 
 class CreateDataUseCase:
@@ -40,13 +40,14 @@ class CreateDataUseCase:
                     )
         raise Exception("Falha ao gerar resposta do LLM.")
 
-    async def execute(self, loadingResult: AnalyzeLoadingResult) -> AnalyzeFullResult:
+    async def execute(self, user_token: str, loadingResult: AnalyzeLoadingResult) -> AnalyzeFullResult:
         prompt = analyze_raw_text_prompt(loadingResult.text)
 
         response_data = self.semantic_cache.generate(
             loadingResult= loadingResult,
             prompt= prompt,
-            llm_callable= self.llm_callable
+            llm_callable= self.llm_callable,
+            user_token= user_token,
         )
 
         if not response_data:
