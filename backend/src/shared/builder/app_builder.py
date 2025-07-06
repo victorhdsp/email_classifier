@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import APIRouter, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from src.dependences import db
+from src.dependences import db, FRONTEND_URL
 from src.routes.route import api_router
 from src.shared.middleware.auth import AutenticationMiddleware
 from src.shared.middleware.error import generic_exception_handler
@@ -50,7 +50,7 @@ class AppBuilder:
     def with_cors(self) -> "AppBuilder":
         self.app.add_middleware(
             CORSMiddleware,
-            allow_origins=["http://127.0.0.1:5173"],
+            allow_origins=[FRONTEND_URL],
             allow_credentials=True,
             allow_methods=["*"],
             allow_headers=["*"],
