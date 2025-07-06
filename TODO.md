@@ -111,8 +111,9 @@
     [x] adicionar sistema assincrono no backend.
     [x] adicionar autenticação.
     [x] adicionar um sistema de filas.
-    [ ] manter conexão aberta com usuário.
-    [ ] adicionar integração do frontend.
+    [x] manter conexão aberta com usuário.
+    [x] adicionar integração assincrona no frontend.
+    [x] adicionar conexão por SSE no frontend.
 * [ ] feature(frontend): Adicionar transições suaves para as mudanças no frontend. **!!
 * [ ] featere(backend): Implementar envio em lote (upload múltiplo). *!!
 

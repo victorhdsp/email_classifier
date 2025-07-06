@@ -48,7 +48,7 @@ class AutenticationMiddleware(BaseHTTPMiddleware):
             value=token,
             max_age=60*60*24*30,  # 30 dias
             httponly=True,
-            samesite="none",
+            samesite="strict",
             secure=True if request.url.scheme == "https" else False,
         )
         return response

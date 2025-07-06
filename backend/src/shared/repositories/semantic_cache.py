@@ -34,7 +34,9 @@ class SemanticCacheRepository:
     def find_owner_by_id(self, cache_id: str, owner: str) -> Optional[dict]:
         cache_entry = self.db.query(SemanticCacheDto).filter(SemanticCacheDto.id == cache_id).first()
         if cache_entry:
+            print(f"[SemanticCacheRepository] Searching for cache ID: {cache_id} with owner: {owner}, found: {cache_entry.owners}")
             if owner in cache_entry.owners:
+                print(f"[SemanticCacheRepository] Cache ID: {cache_id} found with owner: {owner}")
                 return {
                     "id": cache_entry.id,
                     "input_text": cache_entry.input_text,
@@ -49,4 +51,6 @@ class SemanticCacheRepository:
             if owner not in cache_entry.owners:
                 cache_entry.owners.append(owner)
                 self.db.commit()
-                self.db.refresh(cache_entry)
+                print(f"[SemanticCacheRepository] Updated owners for cache ID: {cache_id}, added owner: {owner}")
+            else:
+                print(f"[SemanticCacheRepository] Owner {owner} already exists for cache ID: {cache_id}")

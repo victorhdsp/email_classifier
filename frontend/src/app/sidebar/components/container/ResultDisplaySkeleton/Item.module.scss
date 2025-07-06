@@ -10,8 +10,8 @@
       .resultSubjectContainer {
         @apply flex-1 min-w-0;
 
-        .resultSubject {
-          @apply font-medium text-gray-900 truncate text-sm;
+        .resultSubjectSkeleton {
+          @apply w-4/5 h-6 mb-1;
         }
 
         .resultTypeContainer {
@@ -20,12 +20,8 @@
           .resultType {
             @apply inline-flex items-center px-2 py-1 rounded-full text-xs font-medium;
 
-            &[data-type="Produtivo"] {
-              @apply bg-green-100 text-green-800;
-            }
-
-            &[data-type="Improdutivo"] {
-              @apply bg-yellow-100 text-yellow-800;
+            .resultTypeSkeleton {
+              @apply w-24 h-4;
             }
           }
 
@@ -46,12 +42,13 @@
           @apply w-4 h-4 text-gray-400 transition-transform;
         }
 
+        
         .removeButton {
           @apply p-1 text-gray-400 hover:text-red-500 transition-colors;
         }
       }
     }
-
+    
     &[data-state="open"] .resultChevron {
       @apply rotate-90;
     }
@@ -64,8 +61,12 @@
       @apply text-xs font-medium text-gray-500 uppercase tracking-wide;
     }
 
-    .expandedContentText {
-      @apply text-sm text-gray-700 mt-1;
+    .expandedContentTextSkeleton {
+      @apply w-full h-12;
+    }
+
+    .expandedContentTimestampSkeleton {
+      @apply w-32 h-4;
     }
   }
 }

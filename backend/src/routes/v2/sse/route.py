@@ -10,9 +10,9 @@ sse_router = APIRouter()
 
 @sse_router.get("/sse")
 async def sse_endpoint(request: Request):
-    user_token = request.query_params.get("user_token")
-    if not user_token:
-        raise HTTPException(400, "Missing user_token")
+    user_token = getattr(request.state, "user_token", "")
+    if not user_token or user_token.strip() == "":
+            raise HTTPException(status_code=401, detail="Usuário não autenticado.")
 
     queue = asyncio.Queue()
     user_queues[user_token] = queue
@@ -26,6 +26,6 @@ async def sse_endpoint(request: Request):
                 data = await queue.get()
                 yield f"data: {json.dumps(data)}\n\n"
         finally:
-            del user_queues[user_token]
+            user_queues.pop(user_token, None)
 
     return StreamingResponse(event_stream(), media_type="text/event-stream")

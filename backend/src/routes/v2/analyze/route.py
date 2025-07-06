@@ -50,7 +50,7 @@ async def get_email_analysis(request: Request, email_id: str) -> AnalyzeFullResu
     result = await collect_data_use_case.execute(user_token, email_id)
     if not result:
         raise HTTPException(
-            status_code=404,
-            detail="Email analysis with ID not found."
+            detail="Analyze is not already or you not authorized to access this result.",
+            status_code=400,
         )
     return result

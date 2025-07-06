@@ -38,7 +38,6 @@ class SemanticCacheService:
         cache_id: str,
     ) -> dict | None:
         cached_result = self.repository.find_owner_by_id(cache_id, user_token)
-        
         if not cached_result:
             print(f"[SemanticCache] No cache found for ID: {cache_id}")
             return None
