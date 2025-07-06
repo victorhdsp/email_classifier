@@ -55,7 +55,7 @@ class AutenticationMiddleware(BaseHTTPMiddleware):
             value=token,
             max_age=60*60*24*30,  # 30 dias
             httponly=True,
-            samesite="strict",
+            samesite="none",
             secure=True if request.url.scheme == "https" else False,
         )
         logger.info(f"User token cookie set for token: {token}")
