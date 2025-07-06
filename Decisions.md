@@ -162,6 +162,7 @@ A integração vai ser feito por HTTP em uma API Rest padrão, principalmente co
 
 ## **6. Documentação**
 
+Fiz a documentação utilizando Swagger UI e OpenAPI, que já é o padrão do framework (fastAPI) é a forma mais simples e extremamente funcional, o swagger funciona bem para testar e o OpenAPI é mais agradavel visualmente.
 ---
 
 ## Features extras

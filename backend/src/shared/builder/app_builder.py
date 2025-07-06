@@ -9,10 +9,30 @@ from src.shared.middleware.auth import AutenticationMiddleware
 from src.shared.middleware.error import generic_exception_handler
 from src.shared.services.processing_queue import processing_queue_service
 
+openapi_tags = [
+    {
+        "name": "Versão 1",
+        "description": "Endpoints da versão 1 da API, incluindo análise de e-mails sincronas.",
+    },
+    {
+        "name": "Versão 2",
+        "description": "Endpoints da versão 2 da API, incluindo análise de e-mails assíncronas com SSE.",
+    },
+]
+
 
 class AppBuilder:
     def __init__(self) -> None:
-        self.app = FastAPI()
+        self.app = FastAPI(
+            title="API de Classificação de E-mail",
+            description="API para classificar e analisar o conteúdo de e-mails, determinando se são produtivos ou não.",
+            version="1.0.0",
+            contact={
+                "name": "Suporte",
+                "email": "suporte@example.com",
+            },
+            openapi_tags=openapi_tags,
+        )
         self.processing_queue_service = processing_queue_service
 
     def with_routes(self, routes: APIRouter) -> "AppBuilder":
