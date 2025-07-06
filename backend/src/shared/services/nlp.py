@@ -1,6 +1,10 @@
 from dataclasses import dataclass
 from typing import Protocol
 
+from src.shared.utils.logger import get_logger
+
+logger = get_logger(__name__)
+
 
 @dataclass
 class Token:
@@ -21,9 +25,12 @@ class NLPInterfaceAdapter(Protocol):
 class NLPService:
     def __init__(self, nlp_adapter: NLPInterfaceAdapter):
         self.nlp_adapter = nlp_adapter
+        logger.info("NLPService initialized.")
 
     def pipeline(self, text: str) -> str:
+        logger.info("Starting NLP pipeline.")
         headers, text = self.nlp_adapter.extract_and_strip_headers(text)
+        logger.debug(f"Headers extracted: {headers}")
         text = self.nlp_adapter.to_lowercase(text)
         text = self.nlp_adapter.remove_invalid_chars(text)
         text = self.nlp_adapter.remove_accents_and_special_chars(text)
@@ -33,4 +40,6 @@ class NLPService:
             token.lemma for token in tokens if token.is_alpha and not token.is_stop
         ]
 
-        return " ".join(filtered_tokens)
+        result = " ".join(filtered_tokens)
+        logger.info("NLP pipeline completed.")
+        return result
